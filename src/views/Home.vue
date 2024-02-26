@@ -1,6 +1,9 @@
 <template>
   <main class="home-page">
-    <Greeting></Greeting>
+    <div class="main">
+      <Greeting></Greeting>
+      <NextMeeting></NextMeeting>
+    </div>
   </main>
 </template>
 
@@ -16,7 +19,12 @@
   width: 100%;
   height: 100vh;
 }
+
+.main {
+}
 </style>
+
 <script setup>
 import Greeting from "../components/Greeting.vue";
+import NextMeeting from "../components/NextMeeting.vue";
 </script>
