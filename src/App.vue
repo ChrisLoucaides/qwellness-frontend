@@ -1,13 +1,12 @@
 <template>
   <div class="app">
-    <StudentNavbar></StudentNavbar>
+    <StudentNavbar></StudentNavbar> <!--TODO: Add logic to check the type of user-->
     <router-view></router-view>
   </div>
 </template>
 
 <script setup>
 import StudentNavbar from "./components/StudentNavbar.vue";
-
 </script>
 
 <style lang="scss">
