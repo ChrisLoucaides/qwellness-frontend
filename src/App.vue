@@ -5,6 +5,8 @@
   </div>
 </template>
 
+<!--TODO: Create API class-->
+
 <script setup>
 import StudentNavbar from "./components/StudentNavbar.vue";
 </script>

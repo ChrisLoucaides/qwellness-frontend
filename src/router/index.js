@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from "vue-router";
 import Home from "../views/Home.vue";
 
-const router =createRouter({
+const router =createRouter({ //TODO FYP-10: Add authentication guard
     history: createWebHistory(),
     routes: [
         {
