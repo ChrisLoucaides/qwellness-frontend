@@ -1,5 +1,16 @@
+<script setup>
+import { onMounted } from 'vue'
+import { useUserStore} from "../../auth.ts";
+
+const userStore = useUserStore()
+
+onMounted(async () => {
+  await userStore.fetchUser()
+})
+</script>
+
 <template>
-  <main class="tasks-page">
-    <h1>Tasks</h1>
-  </main>
+  <div v-if="userStore.user">
+    Welcome, {{ userStore.user.username }}!
+  </div>
 </template>

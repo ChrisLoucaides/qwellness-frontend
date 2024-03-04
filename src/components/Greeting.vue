@@ -1,19 +1,21 @@
-<template>
-  <div class="greeting-container">
-    <h1>{{ str1 }}<br/><span>{{ str2 }}</span></h1>
-  </div>
-</template>
-<script>
-export default {
-  name: 'Greeting',
-  data() {
-    return {
-      str1: "Good Afternoon",
-      str2: "Student-Name!",
-    }
-  },
-}
+<script setup>
+import {onMounted} from 'vue'
+import {useUserStore} from "../../auth.ts";
+
+const userStore = useUserStore()
+
+onMounted(async () => {
+  await userStore.fetchUser()
+})
 </script>
+
+<template>
+
+  <div v-if="userStore.user" className="greeting-container">
+    <h1>Good Afternoon, <br> <span>{{ userStore.user.first_name }}!</span></h1>
+  </div>
+
+</template>
 
 <style scoped>
 span {
@@ -25,5 +27,4 @@ span {
   margin: 11em;
   font-size: 1.6em;
 }
-
 </style>

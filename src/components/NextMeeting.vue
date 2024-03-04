@@ -1,17 +1,17 @@
 <template>
   <div class="meeting-pill">
     <div class="meeting-pill-text">
-      Your next meeting with <span>Advisor</span> is on
+      Your next meeting with <span> {{ userStore.user.advisor }} </span> is on
       <br>
-      <span>30/01/2023 at 3PM</span>
+      <span>05/03/2023 at 3PM</span>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'NextMeeting',
-}
+<script setup>
+import { useUserStore } from "../../auth.ts";
+
+const userStore = useUserStore();
 </script>
 
 <style scoped>
@@ -35,7 +35,6 @@ export default {
   position: relative;
   z-index: 1;
 }
-
 
 span {
   color: #3055a4;
