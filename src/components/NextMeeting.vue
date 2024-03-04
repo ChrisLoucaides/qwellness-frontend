@@ -1,6 +1,6 @@
 <template>
   <div class="meeting-pill">
-    <div class="meeting-pill-text">
+    <div v-if="userStore.user" class="meeting-pill-text">
       Your next meeting with <span> {{ userStore.user.advisor }} </span> is on
       <br>
       <span>05/03/2023 at 3PM</span>
