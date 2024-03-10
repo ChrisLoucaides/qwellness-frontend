@@ -1,6 +1,5 @@
 import {defineStore} from 'pinia';
 import {User} from "./src/utils/models/User";
-import Cookies from "js-cookie";
 
 
 

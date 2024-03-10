@@ -9,6 +9,21 @@
 
 <script setup>
 import StudentNavbar from "./components/StudentNavbar.vue";
+import { useRouter } from 'vue-router';
+import { useUserStore } from '../auth.ts';
+
+const router = useRouter();
+const userStore = useUserStore();
+
+const checkAuthentication = async () => {
+  await userStore.fetchUser();
+  const isAuthenticated = !!userStore.user;
+  if (!isAuthenticated) {
+    router.push('/login');
+  }
+};
+
+checkAuthentication();
 </script>
 
 <style lang="scss">
