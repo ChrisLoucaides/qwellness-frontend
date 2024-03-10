@@ -1,5 +1,7 @@
 import {defineStore} from 'pinia';
 import {User} from "./src/utils/models/User";
+import Cookies from "js-cookie";
+
 
 
 export const useUserStore = defineStore('user', {
@@ -23,8 +25,14 @@ export const useUserStore = defineStore('user', {
         async logout() {
             try {
                 this.user = null;
-                Cookies.remove('user_id');
-                const response = await fetch('http://localhost:8000/logout/', {method: 'POST', credentials: 'include'}) //TODO FYP-12: Add logout endpoint to backend
+                const response = await fetch('http://localhost:8000/logout/', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'X-CSRFToken': this.getCookie('csrftoken')
+                    }
+                });
+
                 if (!response.ok) {
                     throw new Error('Failed to logout')
                 }
@@ -33,6 +41,20 @@ export const useUserStore = defineStore('user', {
             } catch (error) {
                 console.error('Failed to logout:', error)
             }
+        },
+        getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
         }
     }
 })

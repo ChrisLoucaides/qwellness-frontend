@@ -44,6 +44,7 @@
 <script>
 import {ref} from "vue";
 import { useUserStore } from "../../auth.ts";
+import {RouterView} from 'vue-router';
 
 const is_expanded = ref(false);
 
@@ -52,10 +53,12 @@ const ToggleMenu = () => {
 }
 
 export default {
+  components: {RouterView},
   methods: {
     logout() {
       const userStore = useUserStore();
       userStore.logout();
+      this.$router.push({name: 'Django Login'})
     }
   }
 }
