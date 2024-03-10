@@ -1,25 +1,35 @@
 <script setup>
-import {onMounted} from 'vue'
-import {useUserStore} from "../../auth.ts";
+import { onMounted, ref, computed } from 'vue';
+import { useUserStore } from '../../auth.ts';
 
-const userStore = useUserStore()
+const userStore = useUserStore();
+const currentTime = ref(new Date());
 
 onMounted(async () => {
-  await userStore.fetchUser()
-})
+  await userStore.fetchUser();
+});
+
+const getGreeting = computed(() => {
+  const hour = currentTime.value.getHours();
+  if (hour < 12) {
+    return 'Good Morning';
+  } else if (hour < 18) {
+    return 'Good Afternoon';
+  } else {
+    return 'Good Evening';
+  }
+});
 </script>
 
 <template>
-
-  <div v-if="userStore.user" className="greeting-container">
-    <h1>Good Afternoon, <br> <span>{{ userStore.user.first_name }}!</span></h1>
+  <div v-if="userStore.user" class="greeting-container">
+    <h1>{{ getGreeting }}, <br> <span>{{ userStore.user.first_name }}!</span></h1>
   </div>
-
 </template>
 
 <style scoped>
 span {
-  color: #2e89c9;
+  color: #076fb0;
 }
 
 .greeting-container {
