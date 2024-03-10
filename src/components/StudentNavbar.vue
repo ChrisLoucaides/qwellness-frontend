@@ -31,10 +31,10 @@
     <div class="flex"></div>
 
     <div class="menu">
-      <button @click="logout" class="button" to="/logout">
+      <router-link @click="logout" class="button" to="/logout">
         <span class="material-icons">logout</span>
         <span class="text">Logout</span>
-      </button>
+      </router-link>
     </div>
 
   </aside>
@@ -42,27 +42,28 @@
 </template>
 
 <script>
-import {ref} from "vue";
+import { ref } from 'vue';
 import { useUserStore } from "../../auth.ts";
-import {RouterView} from 'vue-router';
-
-const is_expanded = ref(false);
-
-const ToggleMenu = () => {
-  is_expanded.value = !is_expanded.value
-}
+import { RouterView } from 'vue-router';
 
 export default {
-  components: {RouterView},
+  components: { RouterView },
+  data() {
+    return {
+      is_expanded: false
+    };
+  },
   methods: {
+    ToggleMenu() {
+      this.is_expanded = !this.is_expanded;
+    },
     logout() {
       const userStore = useUserStore();
       userStore.logout();
-      this.$router.push({name: 'Django Login'})
+      this.$router.push({ name: 'Django Login' });
     }
   }
 }
-
 </script>
 
 <style Lang="scss" scoped>
@@ -73,10 +74,8 @@ aside {
   min-height: 100vh;
   overflow: hidden;
   padding: 1rem;
-
   background-color: var(--dark);
   color: var(--light);
-
   transition: 0.2s ease-out;
 
   .flex {
@@ -95,7 +94,6 @@ aside {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 1rem;
-
     position: relative;
     top: 0;
     transition: 0.2s ease-in-out;
@@ -136,7 +134,6 @@ aside {
       display: flex;
       align-items: center;
       text-decoration: none;
-
       padding: 0.5rem 1rem;
       transition: 0.2s ease-out;
 
