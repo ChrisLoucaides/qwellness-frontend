@@ -19,6 +19,20 @@ export const useUserStore = defineStore('user', {
                 console.error('Failed to fetch user:', error)
                 this.user = null
             }
+        },
+        async logout() {
+            try {
+                this.user = null;
+                Cookies.remove('user_id');
+                const response = await fetch('http://localhost:8000/logout/', {method: 'POST', credentials: 'include'}) //TODO FYP-12: Add logout endpoint to backend
+                if (!response.ok) {
+                    throw new Error('Failed to logout')
+                }
+                console.log("Logged Out")
+                this.user = null
+            } catch (error) {
+                console.error('Failed to logout:', error)
+            }
         }
     }
 })

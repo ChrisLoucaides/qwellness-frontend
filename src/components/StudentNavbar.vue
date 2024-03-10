@@ -31,18 +31,19 @@
     <div class="flex"></div>
 
     <div class="menu">
-      <router-link class="button" to="/logout">
+      <button @click="logout" class="button" to="/logout">
         <span class="material-icons">logout</span>
         <span class="text">Logout</span>
-      </router-link>
+      </button>
     </div>
 
   </aside>
 
 </template>
 
-<script setup>
+<script>
 import {ref} from "vue";
+import { useUserStore } from "../../auth.ts";
 
 const is_expanded = ref(false);
 
@@ -50,6 +51,14 @@ const ToggleMenu = () => {
   is_expanded.value = !is_expanded.value
 }
 
+export default {
+  methods: {
+    logout() {
+      const userStore = useUserStore();
+      userStore.logout();
+    }
+  }
+}
 
 </script>
 
