@@ -1,14 +1,6 @@
-<template>
-  <main class="home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }">
-    <div class="main">
-      <Greeting></Greeting>
-      <NextMeeting></NextMeeting>
-    </div>
-  </main>
-</template>
-
 <script setup>
 import { ref, onMounted } from 'vue';
+import {useUserStore} from "../../auth.ts";
 import Greeting from "../components/Greeting.vue";
 import NextMeeting from "../components/NextMeeting.vue";
 import morningImage from '../assets/morning.png';
@@ -16,6 +8,14 @@ import eveningImage from '../assets/evening.png';
 import aftennoonImage from '../assets/afternoon.png';
 
 const backgroundImage = ref(morningImage);
+
+const userStore = useUserStore()
+
+
+onMounted(async () => {
+  await userStore.fetchUser();
+});
+
 
 function updateBackgroundImage() {
   const hour = new Date().getHours();
@@ -32,6 +32,21 @@ onMounted(() => {
   updateBackgroundImage();
 });
 </script>
+
+<template>
+  <main class="home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }" v-if="userStore.user.role === 'STUDENT'">
+    <div class="main">
+      <Greeting></Greeting>
+      <NextMeeting></NextMeeting>
+    </div>
+  </main>
+
+  <main class="" v-if="userStore.user.role === 'ADVISOR'">
+    <div class="main">
+      <h1>Render Advisor Dashboard here</h1>
+    </div>
+  </main>
+</template>
 
 <style>
 .home-page {

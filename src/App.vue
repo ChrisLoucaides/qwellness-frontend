@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <StudentNavbar></StudentNavbar> <!--TODO: Add logic to check the type of user-->
+    <StudentNavbar></StudentNavbar>
     <router-view></router-view>
   </div>
 </template>
