@@ -1,18 +1,18 @@
 <template>
-  <button class="advisee-list-button">
-    <img class="users-icon" src="../assets/users-icon.png" alt="Users Icon">
-    <span class="button-text"><strong>View Advisee List</strong></span>
+  <button class="upcoming-meetings-button">
+    <img class="users-icon" src="../assets/calendar-icon.png" alt="Users Icon">
+    <span class="button-text"><strong>Upcoming Meetings</strong></span>
   </button>
 </template>
 
 <script>
 export default {
-  name: 'AdviseeListButton',
+  name: 'UpcomingMeetingsButton',
 }
 </script>
 
 <style scoped>
-.advisee-list-button {
+.upcoming-meetings-button {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -31,7 +31,7 @@ export default {
 
 .users-icon {
   margin-bottom: 6em;
-  width: 70%
+  width: 70%;
 }
 
 .button-text {

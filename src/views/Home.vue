@@ -8,6 +8,8 @@ import eveningImage from '../assets/evening.png';
 import aftennoonImage from '../assets/afternoon.png';
 import AdvisorGreeting from "../components/AdvisorGreeting.vue";
 import ViewAdviseeList from "../components/ViewAdviseeList.vue";
+import UpcomingMeetings from "../components/UpcomingMeetings.vue";
+
 
 const backgroundImage = ref(morningImage);
 
@@ -47,6 +49,7 @@ onMounted(() => {
       <AdvisorGreeting></AdvisorGreeting>
       <div class="main-components">
         <ViewAdviseeList></ViewAdviseeList>
+        <UpcomingMeetings></UpcomingMeetings>
       </div>
   </main>
 </template>
