@@ -22,7 +22,7 @@ const getGreeting = computed(() => {
 </script>
 
 <template>
-  <div v-if="userStore.user" class="greeting-container">
+  <div v-if="userStore.user" class="greeting-container" v-motion-roll-visible-top>
     <h1>{{ getGreeting }}, <br> <span>{{ userStore.user.first_name }}!</span></h1>
   </div>
 </template>

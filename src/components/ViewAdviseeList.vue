@@ -1,8 +1,10 @@
 <template>
-  <button class="advisee-list-button">
-    <img class="users-icon" src="../assets/users-icon.png" alt="Users Icon">
-    <span class="button-text"><strong>View Advisee List</strong></span>
-  </button>
+  <div v-motion-slide-visible-once-right>
+    <button class="advisee-list-button">
+      <img class="users-icon" src="../assets/users-icon.png" alt="Users Icon">
+      <span class="button-text"><strong>View Advisee List</strong></span>
+    </button>
+  </div>
 </template>
 
 <script>

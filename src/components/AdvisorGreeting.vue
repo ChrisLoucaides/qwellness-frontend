@@ -11,7 +11,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="userStore.user">
+  <div v-if="userStore.user" v-motion-slide-top>
     <h1>👋 Hi <span>{{ userStore.user.first_name }}!</span></h1>
   </div>
 </template>

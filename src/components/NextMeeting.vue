@@ -1,5 +1,5 @@
 <template>
-  <div class="meeting-pill">
+  <div class="meeting-pill" v-motion-slide-visible-bottom>
     <div v-if="userStore.user" class="meeting-pill-text">
       Your next meeting with <span> {{ userStore.user.advisor }} </span> is on
       <br>

@@ -1,8 +1,10 @@
 <template>
-  <button class="upcoming-meetings-button">
-    <img class="users-icon" src="../assets/calendar-icon.png" alt="Users Icon">
-    <span class="button-text"><strong>Upcoming Meetings</strong></span>
-  </button>
+  <div v-motion-slide-visible-once-left>
+    <button class="upcoming-meetings-button">
+      <img class="users-icon" src="../assets/calendar-icon.png" alt="Users Icon">
+      <span class="button-text"><strong>Upcoming Meetings</strong></span>
+    </button>
+  </div>
 </template>
 
 <script>
