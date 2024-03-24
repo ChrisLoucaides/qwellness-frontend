@@ -6,6 +6,8 @@ import NextMeeting from "../components/NextMeeting.vue";
 import morningImage from '../assets/morning.png';
 import eveningImage from '../assets/evening.png';
 import aftennoonImage from '../assets/afternoon.png';
+import AdvisorGreeting from "../components/AdvisorGreeting.vue";
+import ViewAdviseeList from "../components/ViewAdviseeList.vue";
 
 const backgroundImage = ref(morningImage);
 
@@ -42,9 +44,10 @@ onMounted(() => {
   </main>
 
   <main class="" v-if="userStore.user.role === 'ADVISOR'">
-    <div class="main">
-      <h1>Render Advisor Dashboard here</h1>
-    </div>
+      <AdvisorGreeting></AdvisorGreeting>
+      <div class="main-components">
+        <ViewAdviseeList></ViewAdviseeList>
+      </div>
   </main>
 </template>
 
@@ -61,6 +64,10 @@ onMounted(() => {
   height: 100vh;
 }
 
-.main {
+.main-components {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 </style>
