@@ -18,6 +18,10 @@ const router = createRouter({
             component: () => import("../views/Tasks.vue")
         },
         {
+            path: '/studentlist',
+            component: () => import("../views/StudentList.vue")
+        },
+        {
             path: '/django-login', name: 'Django Login',
             component: DjangoLoginPage,
             meta: {redirect: 'http://localhost:8000/login/'}
