@@ -3,7 +3,7 @@
     <div v-if="loading" class="loading"></div>
     <div v-else-if="error" class="error">{{ error }}</div>
     <div v-else>
-      <div v-for="student in students" :key="student.username" class="student-pill" v-motion-roll-visible-once-top>
+      <div v-for="student in sortedStudents" :key="student.username" class="student-pill" :class="{ 'expired': isExpired(student.last_login_time) }" v-motion-roll-visible-once-top>
         <div class="student-info">
           <p class="student-info-item">{{ student.first_name }}</p>
           <p class="student-info-item">{{ student.last_name }}</p>
@@ -29,11 +29,15 @@ export default {
   created() {
     this.fetchStudents();
   },
+  computed: {
+    sortedStudents() {
+      return this.students.slice().sort((a, b) => new Date(a.last_login_time) - new Date(b.last_login_time));
+    }
+  },
   methods: {
     async fetchStudents() {
       try {
         this.loading = true;
-        // Get advisor's username from userStore
         const advisorUsername = useUserStore().user.username;
 
         const response = await fetch(`http://localhost:8000/filter-advisors-students/?username=${advisorUsername}`, {
@@ -57,6 +61,11 @@ export default {
       const date = new Date(lastLogin);
       const formattedDate = `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
       return formattedDate;
+    },
+    isExpired(lastLogin) {
+      const twoWeeksAgo = new Date();
+      twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+      return new Date(lastLogin) < twoWeeksAgo;
     }
   }
 };
@@ -78,5 +87,9 @@ export default {
 .student-info-item {
   margin: 5px 2px;
   display: inline;
+}
+
+.expired {
+  background-color: #b40909;
 }
 </style>
