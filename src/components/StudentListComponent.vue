@@ -6,7 +6,8 @@
       <div v-for="student in sortedStudents" :key="student.username" class="student-pill" :class="{ 'expired': isExpired(student.last_login_time) }" v-motion-roll-visible-once-top>
         <div class="student-info">
           <p class="student-info-item">{{ student.first_name }}</p>
-          <p class="student-info-item">{{ student.last_name }}</p>
+          <p class="student-info-item">{{ student.last_name }} |</p>
+          <p class="student-info-item">{{ student.email }}</p>
           <br>
           <p class="student-info-item"><strong>Last Login Date:</strong> {{ formatLastLogin(student.last_login_time) }}</p>
         </div>
@@ -85,7 +86,7 @@ export default {
 }
 
 .student-info-item {
-  margin: 5px 2px;
+  margin: 5px 4px;
   display: inline;
 }
 
