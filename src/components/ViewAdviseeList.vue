@@ -1,9 +1,11 @@
 <template>
   <div v-motion-slide-visible-once-right>
-    <button class="advisee-list-button" @mouseover="moveUp" @mouseout="moveDown">
-      <img class="users-icon" src="../assets/users-icon.png" alt="Users Icon">
-      <span class="button-text"><strong>View Advisee List</strong></span>
-    </button>
+    <router-link to="/studentlist">
+      <button class="advisee-list-button" @mouseover="moveUp" @mouseout="moveDown">
+        <img class="users-icon" src="../assets/users-icon.png" alt="Users Icon">
+        <span class="button-text"><strong>View Advisee List</strong></span>
+      </button>
+    </router-link>
   </div>
 </template>
 
