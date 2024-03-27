@@ -1,6 +1,6 @@
 <template>
   <div v-motion-slide-visible-once-right>
-    <button class="advisee-list-button">
+    <button class="advisee-list-button" @mouseover="moveUp" @mouseout="moveDown">
       <img class="users-icon" src="../assets/users-icon.png" alt="Users Icon">
       <span class="button-text"><strong>View Advisee List</strong></span>
     </button>
@@ -10,6 +10,14 @@
 <script>
 export default {
   name: 'AdviseeListButton',
+  methods: {
+    moveUp(event) {
+      event.currentTarget.classList.add('hovered');
+    },
+    moveDown(event) {
+      event.currentTarget.classList.remove('hovered');
+    }
+  }
 }
 </script>
 
@@ -29,6 +37,7 @@ export default {
   margin: 1em;
   cursor: pointer;
   background-image: linear-gradient(to bottom, transparent 75%, #5691a8 75%);
+  transition: transform 0.3s ease-in-out;
 }
 
 .users-icon {
@@ -44,5 +53,9 @@ export default {
   bottom: 1em;
   left: 0;
   right: 0;
+}
+
+.advisee-list-button.hovered {
+  transform: translateY(-2em);
 }
 </style>
