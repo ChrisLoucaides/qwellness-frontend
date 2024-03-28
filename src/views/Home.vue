@@ -5,7 +5,7 @@ import Greeting from "../components/Greeting.vue";
 import NextMeeting from "../components/NextMeeting.vue";
 import morningImage from '../assets/morning.png';
 import eveningImage from '../assets/evening.png';
-import aftennoonImage from '../assets/afternoon.png';
+import afternoonImage from '../assets/afternoon.png';
 import AdvisorGreeting from "../components/AdvisorGreeting.vue";
 import ViewAdviseeList from "../components/ViewAdviseeList.vue";
 import UpcomingMeetings from "../components/UpcomingMeetings.vue";
@@ -26,7 +26,7 @@ function updateBackgroundImage() {
   if (hour >= 6 && hour < 12) {
     backgroundImage.value = morningImage;
   } else if (hour >= 12 && hour < 18) {
-    backgroundImage.value = aftennoonImage;
+    backgroundImage.value = afternoonImage;
   } else {
     backgroundImage.value = eveningImage;
   }
