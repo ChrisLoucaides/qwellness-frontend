@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted} from 'vue';
+import { ref, onMounted } from 'vue';
 import {useUserStore} from "../../auth.ts";
 import Greeting from "../components/Greeting.vue";
 import NextMeeting from "../components/NextMeeting.vue";
@@ -39,8 +39,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
-        v-if="userStore.user.role === 'STUDENT'">
+  <main class="home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }" v-if="userStore.user.role === 'STUDENT'">
     <div class="main">
       <Greeting></Greeting>
       <NextMeeting></NextMeeting>
@@ -49,14 +48,10 @@ onMounted(() => {
 
   <main class="" v-if="userStore.user.role === 'ADVISOR'">
     <AdvisorGreeting></AdvisorGreeting>
-    <div class="">
-    </div>
     <div class="main-components">
       <ViewAdviseeList></ViewAdviseeList>
-      <UpcomingMeetings></UpcomingMeetings>
-    </div>
-    <div class="main-components">
       <StudentDonutChart></StudentDonutChart>
+      <UpcomingMeetings></UpcomingMeetings>
     </div>
   </main>
 </template>
@@ -78,7 +73,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 45%;
-
+  height: 90%;
 }
 </style>
