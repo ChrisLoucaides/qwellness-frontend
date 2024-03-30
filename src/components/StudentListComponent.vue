@@ -74,7 +74,7 @@ export default {
 
 <style scoped>
 .student-pill {
-  background-color: #4f9ce5;
+  background-color: #13c021;
   border-radius: 50px;
   padding: 1em 3em;
   margin: 1em;

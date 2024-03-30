@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-motion-slide-visible-once-top>
-      <button class="student-interaction-button" @mouseover="moveUp" @mouseout="moveDown">
+      <button class="student-interaction-button">
         <div class="chart">
           <Doughnut :data="chartData" :options="{maintainAspectRatio: true}"
                     style="width: 100%; height: 240px;"></Doughnut>
@@ -13,26 +13,65 @@
 </template>
 
 <script setup>
-import {Chart as ChartJS, ArcElement, Tooltip, Legend} from "chart.js";
-import {Doughnut} from "vue-chartjs";
+import { ref } from "vue";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "vue-chartjs";
+import { useUserStore } from "../../auth.ts";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const chartData = {
+let chartData = ref({
   labels: ["Login > 2 Weeks", "Login < 2 Weeks"],
   datasets: [
     {
       label: "Student Attendance",
-      data: [300, 50],
-      backgroundColor: [
-        "rgb(136,14,38)",
-        "rgb(19,192,33)",
-      ],
+      data: [0, 0],
+      backgroundColor: ["rgb(136,14,38)", "rgb(19,192,33)"],
       hoverOffset: 4,
     },
   ],
-};
+});
 
+async function updateChartData() {
+  try {
+    const advisorUsername = useUserStore().user.username;
+    const response = await fetch(`http://localhost:8000/filter-advisors-students/?username=${advisorUsername}`, {
+      credentials: 'include'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch students');
+    }
+
+    const data = await response.json();
+    const students = data.students;
+
+    const loggedWithinTwoWeeks = students.filter(student => !isExpired(student.last_login_time)).length;
+    const loggedOverTwoWeeks = students.length - loggedWithinTwoWeeks;
+
+    chartData.value = {
+      labels: ["Login > 2 Weeks", "Login < 2 Weeks"],
+      datasets: [
+        {
+          label: "Student Attendance",
+          data: [loggedOverTwoWeeks, loggedWithinTwoWeeks],
+          backgroundColor: ["rgb(136,14,38)", "rgb(19,192,33)"],
+          hoverOffset: 4,
+        },
+      ],
+    };
+  } catch (error) {
+    console.error('Failed to update chart data:', error);
+  }
+}
+
+updateChartData();
+
+function isExpired(lastLogin) {
+  const twoWeeksAgo = new Date();
+  twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+  return new Date(lastLogin) < twoWeeksAgo;
+}
 </script>
 
 <style scoped>
