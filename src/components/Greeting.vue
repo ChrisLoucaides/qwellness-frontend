@@ -13,7 +13,7 @@ const getGreeting = computed(() => {
   const hour = currentTime.value.getHours();
   if (hour < 12) {
     return 'Good Morning';
-  } else if (hour < 18) {
+  } else if (hour < 19) {
     return 'Good Afternoon';
   } else {
     return 'Good Evening';

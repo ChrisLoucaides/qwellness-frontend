@@ -26,7 +26,7 @@ function updateBackgroundImage() {
   const hour = new Date().getHours();
   if (hour >= 6 && hour < 12) {
     backgroundImage.value = morningImage;
-  } else if (hour >= 12 && hour < 18) {
+  } else if (hour >= 12 && hour < 19) {
     backgroundImage.value = afternoonImage;
   } else {
     backgroundImage.value = eveningImage;
