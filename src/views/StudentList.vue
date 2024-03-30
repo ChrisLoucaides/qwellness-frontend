@@ -22,6 +22,10 @@ import StudentListComponent from "../components/StudentListComponent.vue";
   align-items: center;
   width: 100%;
   height: 100vh;
+  background-image: url('../assets/advisor-background.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .student-list-header {

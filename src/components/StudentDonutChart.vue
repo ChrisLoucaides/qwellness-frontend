@@ -3,8 +3,7 @@
     <div v-motion-slide-visible-once-top>
       <button class="student-interaction-button">
         <div class="chart">
-          <Doughnut :data="chartData" :options="{maintainAspectRatio: true}"
-                    style="width: 100%; height: 240px;"></Doughnut>
+          <Doughnut :data="chartData" :options="chartOptions" style="width: 100%; height: 240px;"></Doughnut>
         </div>
         <span class="button-text"><strong>Student Interaction</strong></span>
       </button>

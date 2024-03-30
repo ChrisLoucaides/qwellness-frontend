@@ -39,14 +39,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }" v-if="userStore.user.role === 'STUDENT'">
+  <main class="student-home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }" v-if="userStore.user.role === 'STUDENT'">
     <div class="main">
       <Greeting></Greeting>
       <NextMeeting></NextMeeting>
     </div>
   </main>
 
-  <main class="" v-if="userStore.user.role === 'ADVISOR'">
+  <main class="advisor-home-page" v-if="userStore.user.role === 'ADVISOR'">
     <AdvisorGreeting></AdvisorGreeting>
     <div class="main-components">
       <ViewAdviseeList></ViewAdviseeList>
@@ -57,7 +57,7 @@ onMounted(() => {
 </template>
 
 <style>
-.home-page {
+.student-home-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,6 +67,13 @@ onMounted(() => {
   background-position: center center;
   width: 100%;
   height: 100vh;
+}
+
+.advisor-home-page {
+  background-image: url('../assets/advisor-background.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .main-components {
