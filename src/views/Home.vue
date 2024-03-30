@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, onMounted} from 'vue';
 import {useUserStore} from "../../auth.ts";
 import Greeting from "../components/Greeting.vue";
 import NextMeeting from "../components/NextMeeting.vue";
@@ -9,6 +9,7 @@ import afternoonImage from '../assets/afternoon.png';
 import AdvisorGreeting from "../components/AdvisorGreeting.vue";
 import ViewAdviseeList from "../components/ViewAdviseeList.vue";
 import UpcomingMeetings from "../components/UpcomingMeetings.vue";
+import StudentDonutChart from "../components/StudentDonutChart.vue";
 
 
 const backgroundImage = ref(morningImage);
@@ -38,7 +39,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }" v-if="userStore.user.role === 'STUDENT'">
+  <main class="home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }"
+        v-if="userStore.user.role === 'STUDENT'">
     <div class="main">
       <Greeting></Greeting>
       <NextMeeting></NextMeeting>
@@ -46,11 +48,16 @@ onMounted(() => {
   </main>
 
   <main class="" v-if="userStore.user.role === 'ADVISOR'">
-      <AdvisorGreeting></AdvisorGreeting>
-      <div class="main-components">
-        <ViewAdviseeList></ViewAdviseeList>
-        <UpcomingMeetings></UpcomingMeetings>
-      </div>
+    <AdvisorGreeting></AdvisorGreeting>
+    <div class="">
+    </div>
+    <div class="main-components">
+      <ViewAdviseeList></ViewAdviseeList>
+      <UpcomingMeetings></UpcomingMeetings>
+    </div>
+    <div class="main-components">
+      <StudentDonutChart></StudentDonutChart>
+    </div>
   </main>
 </template>
 
@@ -71,6 +78,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 90%;
+  height: 45%;
+
 }
 </style>
