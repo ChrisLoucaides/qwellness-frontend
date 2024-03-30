@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-motion-slide-visible-once-top>
-      <button class="upcoming-meetings-button" @mouseover="moveUp" @mouseout="moveDown">
+      <button class="student-interaction-button" @mouseover="moveUp" @mouseout="moveDown">
         <div class="chart">
           <Doughnut :data="chartData" :options="{maintainAspectRatio: true}"
                     style="width: 100%; height: 240px;"></Doughnut>
@@ -19,15 +19,14 @@ import {Doughnut} from "vue-chartjs";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const chartData = {
-  labels: ["Red", "Blue", "Yellow"],
+  labels: ["Login > 2 Weeks", "Login < 2 Weeks"],
   datasets: [
     {
       label: "Student Attendance",
-      data: [300, 50, 100],
+      data: [300, 50],
       backgroundColor: [
-        "rgb(255, 99, 132)",
-        "rgb(54, 162, 235)",
-        "rgb(255, 205, 86)",
+        "rgb(136,14,38)",
+        "rgb(19,192,33)",
       ],
       hoverOffset: 4,
     },
@@ -37,7 +36,7 @@ const chartData = {
 </script>
 
 <style scoped>
-.upcoming-meetings-button {
+.student-interaction-button {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -55,11 +54,6 @@ const chartData = {
   transition: transform 0.3s ease-in-out;
 }
 
-.users-icon {
-  margin-bottom: 6em;
-  width: 70%;
-}
-
 .button-text {
   color: #fdfdfd;
   font-size: 2rem;
@@ -70,7 +64,7 @@ const chartData = {
   right: 0;
 }
 
-.upcoming-meetings-button.hovered {
+.student-interaction-button:hover {
   transform: translateY(-2em);
 }
 
