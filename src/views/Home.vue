@@ -39,7 +39,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="student-home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }" v-if="userStore.user.role === 'STUDENT'">
+  <main class="student-home-page" :style="{ backgroundImage: 'url(' + backgroundImage + ')' }" v-if="userStore.user.role === 'STUDENT'" v-motion-fade>
     <div class="main">
       <Greeting></Greeting>
       <NextMeeting></NextMeeting>

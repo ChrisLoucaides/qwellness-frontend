@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted } from 'vue'
-import { useUserStore} from "../../auth.ts";
+import {onMounted} from 'vue'
+import {useUserStore} from "../../auth.ts";
 
 const userStore = useUserStore()
 
@@ -10,7 +10,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="userStore.user">
-    Welcome, {{ userStore.user.username }}!
-  </div>
+  <main>
+    <div v-if="userStore.user">
+      <h1> 📝 <span>{{ userStore.user.first_name }}'s</span> Tasks</h1>
+    </div>
+  </main>
 </template>
+
+
+<style scoped>
+span {
+  color: #076fb0;
+}
+</style>
