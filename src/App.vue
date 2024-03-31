@@ -1,14 +1,20 @@
 <template>
   <div class="app">
-    <StudentNavbar></StudentNavbar>
+    <template v-if="userStore.user && userStore.user.role === 'STUDENT'">
+      <StudentNavbar></StudentNavbar>
+    </template>
+    <template v-else-if="userStore.user && userStore.user.role === 'ADVISOR'">
+      <AdvisorNavbar></AdvisorNavbar>
+    </template>
     <router-view></router-view>
   </div>
 </template>
 
 <script setup>
-import StudentNavbar from "./components/StudentNavbar.vue";
 import { useRouter } from 'vue-router';
 import { useUserStore } from '../auth.ts';
+import StudentNavbar from "./components/StudentNavbar.vue";
+import AdvisorNavbar from "./components/AdvisorNavbar.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
