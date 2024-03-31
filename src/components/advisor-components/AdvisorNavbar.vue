@@ -24,7 +24,7 @@
       </router-link>
       <router-link class="button" to="/studentlist">
         <span class="material-icons">group</span>
-        <span class="text">Tasks</span>
+        <span class="text">Advisees</span>
       </router-link>
     </div>
 
