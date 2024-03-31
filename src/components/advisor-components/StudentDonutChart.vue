@@ -15,7 +15,7 @@
 import { ref } from "vue";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "vue-chartjs";
-import { useUserStore } from "../../auth.ts";
+import { useUserStore } from "../../../auth.ts";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

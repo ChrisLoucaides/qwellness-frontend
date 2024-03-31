@@ -1,6 +1,6 @@
 <script setup>
 import {onMounted} from 'vue';
-import {useUserStore} from '../../auth.ts';
+import {useUserStore} from '../../../auth.ts';
 
 const userStore = useUserStore();
 

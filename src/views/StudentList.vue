@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import StudentListComponent from "../components/StudentListComponent.vue";
+import StudentListComponent from "../components/advisor-components/StudentListComponent.vue";
 </script>
 
 <style scoped>

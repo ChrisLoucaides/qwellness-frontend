@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, computed } from 'vue';
-import { useUserStore } from '../../auth.ts';
+import { useUserStore } from '../../../auth.ts';
 
 const userStore = useUserStore();
 const currentTime = ref(new Date());

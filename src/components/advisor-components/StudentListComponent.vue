@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { useUserStore } from "../../auth.ts";
+import { useUserStore } from "../../../auth.ts";
 
 export default {
   data() {

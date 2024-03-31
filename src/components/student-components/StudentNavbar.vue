@@ -1,7 +1,7 @@
 <template>
   <aside :class="`${is_expanded && 'is-expanded'}`">
     <div class="logo">
-      <img src="../assets/q-wellness%20logo-white.png" alt="">
+      <img src="../../assets/q-wellness%20logo-white.png" alt="">
     </div>
 
     <div class="menu-toggle-wrap">
@@ -43,7 +43,7 @@
 
 <script>
 import { ref } from 'vue';
-import { useUserStore } from "../../auth.ts";
+import { useUserStore } from "../../../auth.ts";
 import { RouterView } from 'vue-router';
 
 export default {

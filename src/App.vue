@@ -13,8 +13,8 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { useUserStore } from '../auth.ts';
-import StudentNavbar from "./components/StudentNavbar.vue";
-import AdvisorNavbar from "./components/AdvisorNavbar.vue";
+import StudentNavbar from "./components/student-components/StudentNavbar.vue";
+import AdvisorNavbar from "./components/advisor-components/AdvisorNavbar.vue";
 
 const router = useRouter();
 const userStore = useUserStore();

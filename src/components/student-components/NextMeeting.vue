@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { useUserStore } from "../../auth.ts";
+import { useUserStore } from "../../../auth.ts";
 
 const userStore = useUserStore();
 </script>

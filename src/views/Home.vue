@@ -1,15 +1,15 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import {useUserStore} from "../../auth.ts";
-import Greeting from "../components/Greeting.vue";
-import NextMeeting from "../components/NextMeeting.vue";
+import Greeting from "../components/student-components/Greeting.vue";
+import NextMeeting from "../components/student-components/NextMeeting.vue";
 import morningImage from '../assets/morning.png';
 import eveningImage from '../assets/evening.png';
 import afternoonImage from '../assets/afternoon.png';
-import AdvisorGreeting from "../components/AdvisorGreeting.vue";
-import ViewAdviseeList from "../components/ViewAdviseeList.vue";
+import AdvisorGreeting from "../components/advisor-components/AdvisorGreeting.vue";
+import ViewAdviseeList from "../components/advisor-components/ViewAdviseeList.vue";
 import UpcomingMeetings from "../components/UpcomingMeetings.vue";
-import StudentDonutChart from "../components/StudentDonutChart.vue";
+import StudentDonutChart from "../components/advisor-components/StudentDonutChart.vue";
 
 
 const backgroundImage = ref(morningImage);
