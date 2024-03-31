@@ -8,7 +8,7 @@ import eveningImage from '../assets/evening.png';
 import afternoonImage from '../assets/afternoon.png';
 import AdvisorGreeting from "../components/advisor-components/AdvisorGreeting.vue";
 import ViewAdviseeList from "../components/advisor-components/ViewAdviseeList.vue";
-import UpcomingMeetings from "../components/UpcomingMeetings.vue";
+import UpcomingMeetings from "../components/advisor-components/UpcomingMeetings.vue";
 import StudentDonutChart from "../components/advisor-components/StudentDonutChart.vue";
 
 

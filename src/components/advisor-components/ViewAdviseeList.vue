@@ -39,7 +39,11 @@ export default {
   margin: 1em;
   cursor: pointer;
   background-image: linear-gradient(to bottom, transparent 75%, #5691a8 75%);
-  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1),
+  -4px 0 8px rgba(0, 0, 0, 0.1),
+  4px 0 8px rgba(0, 0, 0, 0.1),
+  0 8px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .users-icon {
@@ -55,6 +59,14 @@ export default {
   bottom: 1em;
   left: 0;
   right: 0;
+}
+
+.advisee-list-button:hover {
+  transform: translateY(-2em);
+  box-shadow: 0 12px 12px rgba(0, 0, 0, 0.2),
+  -6px 0 10px rgba(0, 0, 0, 0.2),
+  6px 0 10px rgba(0, 0, 0, 0.2),
+  0 10px 10px rgba(0, 0, 0, 0.2);
 }
 
 .advisee-list-button.hovered {

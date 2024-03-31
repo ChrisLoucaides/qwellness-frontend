@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-motion-slide-visible-once-top>
-      <button class="student-interaction-button">
+      <button class="student-interaction-button" @mouseover="moveUp" @mouseout="moveDown">
         <div class="chart">
           <Doughnut :data="chartData" :options="chartOptions" style="width: 100%; height: 240px;"></Doughnut>
         </div>
@@ -71,6 +71,14 @@ function isExpired(lastLogin) {
   twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
   return new Date(lastLogin) < twoWeeksAgo;
 }
+
+function moveUp(event) {
+  event.currentTarget.classList.add('hovered');
+}
+
+function moveDown(event) {
+  event.currentTarget.classList.remove('hovered');
+}
 </script>
 
 <style scoped>
@@ -89,7 +97,11 @@ function isExpired(lastLogin) {
   margin: 1em;
   cursor: pointer;
   background-image: linear-gradient(to bottom, transparent 75%, #5691a8 75%);
-  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1),
+  -4px 0 8px rgba(0, 0, 0, 0.1),
+  4px 0 8px rgba(0, 0, 0, 0.1),
+  0 8px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .button-text {
@@ -104,6 +116,10 @@ function isExpired(lastLogin) {
 
 .student-interaction-button:hover {
   transform: translateY(-2em);
+  box-shadow: 0 12px 12px rgba(0, 0, 0, 0.2),
+  -6px 0 10px rgba(0, 0, 0, 0.2),
+  6px 0 10px rgba(0, 0, 0, 0.2),
+  0 10px 10px rgba(0, 0, 0, 0.2);
 }
 
 .chart {

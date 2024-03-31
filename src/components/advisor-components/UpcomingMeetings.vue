@@ -1,7 +1,7 @@
 <template>
   <div v-motion-slide-visible-once-left>
     <button class="upcoming-meetings-button" @mouseover="moveUp" @mouseout="moveDown">
-      <img class="users-icon" src="../assets/calendar-icon.png" alt="Users Icon">
+      <img class="users-icon" src="../../assets/calendar-icon.png" alt="Users Icon">
       <span class="button-text"><strong>Upcoming Meetings</strong></span>
     </button>
   </div>
@@ -37,7 +37,11 @@ export default {
   margin: 1em;
   cursor: pointer;
   background-image: linear-gradient(to bottom, transparent 75%, #5691a8 75%);
-  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1),
+  -4px 0 8px rgba(0, 0, 0, 0.1),
+  4px 0 8px rgba(0, 0, 0, 0.1),
+  0 8px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added box-shadow transition */
 }
 
 .users-icon {
@@ -53,6 +57,13 @@ export default {
   bottom: 1em;
   left: 0;
   right: 0;
+}
+
+.upcoming-meetings-button:hover {
+  box-shadow: 0 12px 12px rgba(0, 0, 0, 0.2),
+  -6px 0 10px rgba(0, 0, 0, 0.2),
+  6px 0 10px rgba(0, 0, 0, 0.2),
+  0 10px 10px rgba(0, 0, 0, 0.2);
 }
 
 .upcoming-meetings-button.hovered {
