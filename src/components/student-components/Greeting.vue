@@ -32,6 +32,11 @@ span {
   color: #076fb0;
 }
 
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
 .greeting-container {
   text-align: center;
   margin: 11em;

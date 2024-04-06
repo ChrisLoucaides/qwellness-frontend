@@ -130,4 +130,8 @@ const getCookie = (name) => {
 span {
   color: #076fb0;
 }
+
+h1 {
+  font-weight: bold;
+}
 </style>
