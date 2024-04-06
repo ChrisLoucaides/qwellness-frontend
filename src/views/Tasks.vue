@@ -8,6 +8,7 @@
       Create Task
     </button>
 
+    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -38,14 +39,46 @@
         </div>
       </div>
     </div>
+
+    <!-- TODO: FYP-23 Style into a Task/Task List component -->
+    <div v-if="tasks.length">
+      <h2>Your Tasks:</h2>
+      <ul>
+        <li v-for="task in tasks" :key="task.id">
+          {{ task.name }} - Due: {{ task.due_date }} {{task.description}}
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      <p>No tasks available</p>
+    </div>
   </main>
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import {useUserStore} from "../../auth.ts";
+import { ref, onMounted } from 'vue'
+import { useUserStore } from "../../auth.ts";
 
 const userStore = useUserStore()
+
+const tasks = ref([])
+
+onMounted(async () => {
+  try {
+    const response = await fetch('http://localhost:8000/get_student_tasks/?username=' + userStore.user.username, {
+      method: 'GET',
+      credentials: "include"
+    })
+    if (response.ok) {
+      const data = await response.json()
+      tasks.value = data.tasks
+    } else {
+      console.error('Failed to fetch tasks:', response.statusText)
+    }
+  } catch (error) {
+    console.error('Error fetching tasks:', error)
+  }
+})
 
 const task = ref({
   name: '',
