@@ -45,7 +45,8 @@
         <div v-if="tasks.length">
           <h2 class="to-do-list-heading">To  Do List</h2>
           <hr>
-          <Task v-for="task in tasks" :key="task.id" :task="task" v-motion-slide-top/>
+          <Task v-for="task in tasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
+
         </div>
         <div v-else>
           <p>No tasks available</p>
@@ -88,6 +89,30 @@ const task = ref({
   due_date: '',
   description: ''
 })
+
+const updateTask = async (taskId, updatedTaskDetails) => {
+  try {
+    const csrfToken = getCookie('csrftoken');
+    const response = await fetch(`http://localhost:8000/update_task/${taskId}/`, {
+      method: 'PUT', // or 'PATCH' depending on your backend
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      },
+      credentials: "include",
+      body: JSON.stringify(updatedTaskDetails)
+    });
+    if (response.ok) {
+      // Handle success response, possibly refresh the list of tasks
+      console.log("Task updated successfully");
+      await fetchTasks(); // Assuming you have a method to fetch tasks
+    } else {
+      console.error('Failed to update task:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error updating task:', error);
+  }
+};
 
 const createTask = async () => {
   try {
