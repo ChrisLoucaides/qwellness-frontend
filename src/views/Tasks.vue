@@ -1,6 +1,6 @@
 <template>
-  <main>
-    <div v-if="userStore.user">
+  <main v-motion-fade>
+    <div v-if="userStore.user" v-motion-slide-bottom>
       <h1> 📝 <span>{{ userStore.user.first_name }}'s</span> Tasks</h1>
     </div>
 
@@ -40,24 +40,27 @@
       </div>
     </div>
 
-    <!-- TODO: FYP-23 Style into a Task/Task List component -->
-    <div v-if="tasks.length">
-      <h2>Your Tasks:</h2>
-      <ul>
-        <li v-for="task in tasks" :key="task.id">
-          {{ task.name }} - Due: {{ task.due_date }} {{task.description}}
-        </li>
-      </ul>
+    <div class="restrict-task-container">
+      <div class="task-container" v-motion-pop-visible-once>
+        <div v-if="tasks.length">
+          <h2 class="to-do-list-heading">To  Do List</h2>
+          <hr>
+          <Task v-for="task in tasks" :key="task.id" :task="task" v-motion-slide-top/>
+        </div>
+        <div v-else>
+          <p>No tasks available</p>
+        </div>
+      </div>
     </div>
-    <div v-else>
-      <p>No tasks available</p>
-    </div>
+
+
   </main>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useUserStore } from "../../auth.ts";
+import {ref, onMounted} from 'vue'
+import {useUserStore} from "../../auth.ts";
+import Task from "../components/student-components/Task.vue";
 
 const userStore = useUserStore()
 
@@ -88,7 +91,6 @@ const task = ref({
 
 const createTask = async () => {
   try {
-    // Get CSRF token from cookie
     const csrfToken = getCookie('csrftoken');
 
     const response = await fetch('http://localhost:8000/create_task/', {
@@ -111,6 +113,7 @@ const createTask = async () => {
       task.value.name = ''
       task.value.due_date = ''
       task.value.description = ''
+      location.reload()
     } else {
       console.error('Failed to create task:', response.statusText)
     }
@@ -132,6 +135,33 @@ span {
 }
 
 h1 {
+  font-weight: bold;
+}
+
+.task-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 700px;
+  max-height: 800px;
+  overflow-y: auto;
+  background-color: #A9B7C3;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 40px;
+  padding: 20px;
+  margin: 20px;
+}
+
+.restrict-task-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.to-do-list-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: bold;
 }
 </style>
