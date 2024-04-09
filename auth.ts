@@ -10,7 +10,7 @@ export const useUserStore = defineStore('user', {
     actions: {
         async fetchUser() {
             try {
-                const response = await fetch('http://localhost:8000/get-user-info/', {credentials: 'include'})
+                const response = await fetch('http://localhost:8000/get-user-info/', {credentials: 'include'}) //TODO FYP:26 Change endpoint to remove method name
                 if (!response.ok) {
                     throw new Error('Failed to fetch')
                 }

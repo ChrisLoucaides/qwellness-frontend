@@ -67,7 +67,7 @@ const tasks = ref([])
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:8000/get_student_tasks/?username=' + userStore.user.username, {
+    const response = await fetch('http://localhost:8000/get_student_tasks/?username=' + userStore.user.username, { //TODO FYP:26 Change endpoint to remove method name
       method: 'GET',
       credentials: "include"
     })
@@ -91,7 +91,7 @@ const task = ref({
 const updateTask = async (taskId, updatedTaskDetails) => {
   try {
     const csrfToken = getCookie('csrftoken');
-    const response = await fetch(`http://localhost:8000/update_task/${taskId}/`, {
+    const response = await fetch(`http://localhost:8000/update_task/${taskId}/`, { //TODO FYP:26 Change endpoints to remove method names
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ const createTask = async () => {
   try {
     const csrfToken = getCookie('csrftoken');
 
-    const response = await fetch('http://localhost:8000/create_task/', {
+    const response = await fetch('http://localhost:8000/create_task/', { //TODO FYP:26 Change endpoint to remove method name
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
