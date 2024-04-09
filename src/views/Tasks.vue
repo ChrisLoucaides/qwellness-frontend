@@ -3,12 +3,26 @@
     <div v-if="userStore.user" v-motion-slide-bottom>
       <h1> 📝 <span>{{ userStore.user.first_name }}'s</span> Tasks</h1>
     </div>
+    <div class="restrict-task-container">
+      <div class="task-container" v-motion-pop-visible-once>
+        <div v-if="tasks.length">
+          <h2 class="to-do-list-heading">To  Do List</h2>
+          <hr>
+          <Task v-for="task in tasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
 
+        </div>
+        <div v-else>
+          <p>No tasks available</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Create Task
     </button>
 
-    <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -39,23 +53,7 @@
         </div>
       </div>
     </div>
-
-    <div class="restrict-task-container">
-      <div class="task-container" v-motion-pop-visible-once>
-        <div v-if="tasks.length">
-          <h2 class="to-do-list-heading">To  Do List</h2>
-          <hr>
-          <Task v-for="task in tasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
-
-        </div>
-        <div v-else>
-          <p>No tasks available</p>
-        </div>
-      </div>
-    </div>
-
-
-  </main>
+  </div>
 </template>
 
 <script setup>
@@ -94,7 +92,7 @@ const updateTask = async (taskId, updatedTaskDetails) => {
   try {
     const csrfToken = getCookie('csrftoken');
     const response = await fetch(`http://localhost:8000/update_task/${taskId}/`, {
-      method: 'PUT', // or 'PATCH' depending on your backend
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrfToken
@@ -103,9 +101,8 @@ const updateTask = async (taskId, updatedTaskDetails) => {
       body: JSON.stringify(updatedTaskDetails)
     });
     if (response.ok) {
-      // Handle success response, possibly refresh the list of tasks
       console.log("Task updated successfully");
-      await fetchTasks(); // Assuming you have a method to fetch tasks
+      await fetchTasks();
     } else {
       console.error('Failed to update task:', response.statusText);
     }
@@ -138,7 +135,7 @@ const createTask = async () => {
       task.value.name = ''
       task.value.due_date = ''
       task.value.description = ''
-      location.reload()
+      window.location.replace("http://localhost:5173/tasks");
     } else {
       console.error('Failed to create task:', response.statusText)
     }
