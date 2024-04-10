@@ -224,4 +224,11 @@ h1 {
 .task-scroll-container::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+main {
+  background-image: url('../assets/advisor-background.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 </style>
