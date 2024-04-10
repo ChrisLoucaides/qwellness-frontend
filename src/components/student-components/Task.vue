@@ -41,7 +41,9 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" @click="saveTaskChanges">Save Changes</button>
+          <button type="button" class="btn btn-primary" :disabled="!buttonEnabled" @click="saveTaskChanges">Save
+            Changes
+          </button>
         </div>
       </div>
     </div>
@@ -49,7 +51,7 @@
 </template>
 
 <script setup>
-import {defineProps, onMounted, ref, toRefs} from 'vue';
+import {defineProps, onMounted, ref, toRefs, defineEmits} from 'vue';
 
 const props = defineProps({
   task: Object
@@ -57,16 +59,20 @@ const props = defineProps({
 
 const {task} = toRefs(props);
 const editedTask = ref({...task.value});
+const buttonEnabled = ref(false);
+const emit = defineEmits(['edit-task'])
 
 const openEditModal = () => {
-  $('#editTaskModal_' + task.value.id).modal('show');
 };
 
 const saveTaskChanges = () => {
-  this.$emit('edit-task', task.value.id, editedTask.value);
+  emit('edit-task', task.value.id, editedTask.value);
 };
 
 onMounted(() => {
+  setTimeout(() => {
+    buttonEnabled.value = true;
+  }, 3000);
   document.body.appendChild(document.getElementById('editTaskModal_' + task.value.id));
 });
 </script>

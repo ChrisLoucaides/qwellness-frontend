@@ -91,7 +91,7 @@ const task = ref({
 const updateTask = async (taskId, updatedTaskDetails) => {
   try {
     const csrfToken = getCookie('csrftoken');
-    const response = await fetch(`http://localhost:8000/update_task/${taskId}/`, { //TODO FYP:26 Change endpoints to remove method names
+    const response = await fetch(`http://localhost:8000/update_task/`, { //TODO FYP:26 Change endpoints to remove method names
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -109,6 +109,7 @@ const updateTask = async (taskId, updatedTaskDetails) => {
   } catch (error) {
     console.error('Error updating task:', error);
   }
+  window.location.replace("http://localhost:5173/tasks");
 };
 
 const createTask = async () => {
