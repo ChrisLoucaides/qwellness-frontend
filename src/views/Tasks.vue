@@ -11,8 +11,15 @@
         <div v-else>
           <div v-if="tasks.length">
             <h2 class="to-do-list-heading">To Do List</h2>
+            <div class="flex-center">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Create Task
+              </button>
+            </div>
             <hr>
-            <Task v-for="task in tasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
+            <div class="task-scroll-container" v-motion-slide-visible-bottom>
+              <Task v-for="task in tasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
+            </div>
           </div>
           <div v-else>
             <h3>No tasks available</h3>
@@ -23,10 +30,6 @@
   </main>
 
   <div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Create Task
-    </button>
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -61,8 +64,8 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue'
-import {useUserStore} from "../../auth.ts";
+import { ref, onMounted } from 'vue'
+import { useUserStore } from "../../auth.ts";
 import Task from "../components/student-components/Task.vue";
 
 const userStore = useUserStore()
@@ -173,8 +176,6 @@ h1 {
   align-items: center;
   justify-content: center;
   width: 700px;
-  max-height: 800px;
-  overflow-y: auto;
   background-color: #A9B7C3;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 40px;
@@ -188,10 +189,39 @@ h1 {
   justify-content: center;
 }
 
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .to-do-list-heading {
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
+}
+
+.task-scroll-container {
+  max-height: 450px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.task-scroll-container::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.task-scroll-container::-webkit-scrollbar-track {
+  background: #A9B7C3;
+}
+
+.task-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 6px;
+}
+
+.task-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 </style>
