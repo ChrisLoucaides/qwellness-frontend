@@ -15,7 +15,7 @@
             <Task v-for="task in tasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
           </div>
           <div v-else>
-            <p>No tasks available</p>
+            <h3>No tasks available</h3>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:8000/get_student_tasks/?username=' + userStore.user.username, { //TODO FYP:26 Change endpoint to remove method name
+    const response = await fetch('http://localhost:8000/student-tasks/?username=' + userStore.user.username, {
       method: 'GET',
       credentials: "include"
     })
@@ -98,7 +98,7 @@ const task = ref({
 const updateTask = async (taskId, updatedTaskDetails) => {
   try {
     const csrfToken = getCookie('csrftoken');
-    const response = await fetch(`http://localhost:8000/update_task/`, { //TODO FYP:26 Change endpoints to remove method names
+    const response = await fetch(`http://localhost:8000/edit-task/`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ const createTask = async () => {
   try {
     const csrfToken = getCookie('csrftoken');
 
-    const response = await fetch('http://localhost:8000/create_task/', { //TODO FYP:26 Change endpoint to remove method name
+    const response = await fetch('http://localhost:8000/new-task/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
