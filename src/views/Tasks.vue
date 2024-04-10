@@ -5,14 +5,18 @@
     </div>
     <div class="restrict-task-container">
       <div class="task-container" v-motion-pop-visible-once>
-        <div v-if="tasks.length">
-          <h2 class="to-do-list-heading">To  Do List</h2>
-          <hr>
-          <Task v-for="task in tasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
-
+        <div v-if="loading">
+          <p>Loading tasks...</p>
         </div>
         <div v-else>
-          <p>No tasks available</p>
+          <div v-if="tasks.length">
+            <h2 class="to-do-list-heading">To Do List</h2>
+            <hr>
+            <Task v-for="task in tasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
+          </div>
+          <div v-else>
+            <p>No tasks available</p>
+          </div>
         </div>
       </div>
     </div>
@@ -64,6 +68,7 @@ import Task from "../components/student-components/Task.vue";
 const userStore = useUserStore()
 
 const tasks = ref([])
+const loading = ref(true)
 
 onMounted(async () => {
   try {
@@ -79,6 +84,8 @@ onMounted(async () => {
     }
   } catch (error) {
     console.error('Error fetching tasks:', error)
+  } finally {
+    loading.value = false
   }
 })
 
