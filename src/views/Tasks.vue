@@ -22,6 +22,11 @@
             </div>
           </div>
           <div v-else>
+            <div class="flex-center">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Create Task
+              </button>
+            </div>
             <h3>No tasks available</h3>
           </div>
         </div>

@@ -10,6 +10,7 @@
           <button type="button" class="btn btn-warning" @click="openEditModal" data-bs-toggle="modal"
                   :data-bs-target="'#editTaskModal_' + task.id">Edit Task
           </button>
+          <button type="button" class="btn btn-danger" @click="deleteTask">Delete Task</button>
         </div>
 
       </div>
@@ -67,6 +68,34 @@ const openEditModal = () => {
 
 const saveTaskChanges = () => {
   emit('edit-task', task.value.id, editedTask.value);
+};
+
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+const deleteTask = async () => {
+  try {
+    const csrfToken = getCookie('csrftoken');
+    const response = await fetch(`http://localhost:8000/complete-task/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      },
+      credentials: "include",
+      body: JSON.stringify({ id: task.value.id })
+    });
+    if (response.ok) {
+      console.log("Task deleted successfully");
+    } else {
+      console.error('Failed to delete task:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error deleting task:', error);
+  }
 };
 
 onMounted(() => {
