@@ -61,7 +61,7 @@ const props = defineProps({
 const {task} = toRefs(props);
 const editedTask = ref({...task.value});
 const buttonEnabled = ref(false);
-const isVisible = ref(true); // Initially visible
+const isVisible = ref(true);
 const emit = defineEmits(['edit-task'])
 
 const openEditModal = () => {
