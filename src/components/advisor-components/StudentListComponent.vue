@@ -3,13 +3,16 @@
     <div v-if="loading" class="loading"></div>
     <div v-else-if="error" class="error">{{ error }}</div>
     <div v-else>
-      <div v-for="student in sortedStudents" :key="student.username" class="student-pill" :class="{ 'expired': isExpired(student.last_login_time) }" v-motion-roll-visible-once-top>
+      <!--TODO: Make this scrollable-->
+      <div v-for="student in sortedStudents" :key="student.username" class="student-pill"
+           :class="{ 'expired': isExpired(student.last_login_time) }" v-motion-roll-visible-once-top>
         <div class="student-info">
           <p class="student-info-item">{{ student.first_name }}</p>
           <p class="student-info-item">{{ student.last_name }} |</p>
           <p class="student-info-item">{{ student.email }}</p>
           <br>
-          <p class="student-info-item"><strong>Last Login Date:</strong> {{ formatLastLogin(student.last_login_time) }}</p>
+          <p class="student-info-item"><strong>Last Login Date:</strong> {{ formatLastLogin(student.last_login_time) }}
+          </p>
         </div>
       </div>
     </div>
@@ -17,7 +20,7 @@
 </template>
 
 <script>
-import { useUserStore } from "../../../auth.ts";
+import {useUserStore} from "../../../auth.ts";
 
 export default {
   data() {
