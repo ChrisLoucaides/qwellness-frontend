@@ -27,7 +27,8 @@
                 Create Task
               </button>
             </div>
-            <h3>No tasks available</h3>
+            <hr>
+            <h3>No tasks currently</h3>
           </div>
         </div>
       </div>
