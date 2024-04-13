@@ -1,5 +1,5 @@
 <template>
-  <div class="task">
+  <div class="task" v-if="isVisible">
     <div class="card text-white bg-primary mb-3" style="max-width: 50rem;">
       <div class="card-header"><h3>{{ task.name }}</h3></div>
       <div class="card-body">
@@ -10,7 +10,7 @@
           <button type="button" class="btn btn-warning" @click="openEditModal" data-bs-toggle="modal"
                   :data-bs-target="'#editTaskModal_' + task.id">Edit Task
           </button>
-          <button type="button" class="btn btn-danger" @click="deleteTask">Delete Task</button>
+          <button type="button" class="btn btn-danger" @click="deleteTaskAndHide">Delete Task</button>
         </div>
 
       </div>
@@ -61,9 +61,15 @@ const props = defineProps({
 const {task} = toRefs(props);
 const editedTask = ref({...task.value});
 const buttonEnabled = ref(false);
+const isVisible = ref(true); // Initially visible
 const emit = defineEmits(['edit-task'])
 
 const openEditModal = () => {
+};
+
+const deleteTaskAndHide = async () => {
+  await deleteTask();
+  isVisible.value = false;
 };
 
 const saveTaskChanges = () => {
