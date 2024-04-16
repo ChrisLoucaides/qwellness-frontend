@@ -9,8 +9,11 @@
         <div>
           <button type="button" class="btn btn-warning" @click="openEditModal" data-bs-toggle="modal"
                   :data-bs-target="'#editTaskModal_' + task.id">Edit Task
+            <span class="material-icons check">edit</span>
           </button>
-          <button type="button" class="btn btn-danger" @click="deleteTaskAndHide">Delete Task</button>
+          <button type="button" class="btn btn-success" @click="deleteTaskAndHide">Complete Task
+            <span class="material-icons check">check_circle</span>
+          </button>
         </div>
 
       </div>
@@ -92,7 +95,7 @@ const deleteTask = async () => {
         'X-CSRFToken': csrfToken
       },
       credentials: "include",
-      body: JSON.stringify({ id: task.value.id })
+      body: JSON.stringify({id: task.value.id})
     });
     if (response.ok) {
       console.log("Task deleted successfully");
@@ -113,4 +116,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
+button {
+  margin-right: 1em;
+  border-radius: 0.75em;
+}
+
+.check {
+  position: relative;
+  top: 0.2em;
+}
 </style>

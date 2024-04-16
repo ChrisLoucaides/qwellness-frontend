@@ -14,6 +14,7 @@
             <div class="flex-center">
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTask">
                 Create Task
+                <span class="material-icons add-circle">add_circle</span>
               </button>
             </div>
             <hr>
@@ -25,6 +26,7 @@
             <div class="flex-center">
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTask">
                 Create Task
+                <span class="material-icons add-circle">add_circle</span>
               </button>
             </div>
             <hr>
@@ -70,8 +72,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useUserStore } from "../../auth.ts";
+import {ref, onMounted} from 'vue'
+import {useUserStore} from "../../auth.ts";
 import Task from "../components/student-components/Task.vue";
 
 const userStore = useUserStore()
@@ -229,6 +231,16 @@ h1 {
 
 .task-scroll-container::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.add-circle {
+  position: relative;
+  top: 0.25em;
+  color: white;
+}
+
+.create {
+  font-weight: bold;
 }
 
 main {
