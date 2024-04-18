@@ -1,9 +1,9 @@
 <template>
   <main v-motion-fade>
     <div v-if="userStore.user" v-motion-slide-bottom>
-      <h1> 📝 <span>{{ userStore.user.first_name }}'s</span> Tasks</h1>
+      <h1> 📅 <span>{{ userStore.user.first_name }}'s</span> Calendar</h1>
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createMeeting">
-        Create Task
+        Schedule Meeting
         <span class="material-icons add-circle">add_circle</span>
       </button>
     </div>
