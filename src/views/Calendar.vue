@@ -7,6 +7,7 @@
         <span class="material-icons add-circle">add_circle</span>
       </button>
     </div>
+<!--TODO FYP-32: Display different content if an advisor is logged in-->
     <div class="restrict-task-container">
       <StudentMeetings />
     </div>
