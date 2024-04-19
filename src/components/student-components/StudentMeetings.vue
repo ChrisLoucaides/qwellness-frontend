@@ -1,11 +1,39 @@
 <template>
   <div>
-    <h2>Upcoming Meetings</h2>
-    <div v-for="meeting in meetings" :key="meeting.id">
-      <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
-        <div class="card-body">
-          <h4 class="card-title">{{ formatDate(meeting.date) }} at {{ formatTime(meeting.time) }}</h4>
-          <h4 class="card-text"> Meeting with {{ userStore.user.advisor }}</h4>
+    <br>
+    <div class="scrollable-column">
+      <h2><strong>Upcoming Meetings</strong></h2>
+      <hr>
+      <div v-if="upcomingMeetings.length === 0">No upcoming meetings</div>
+      <div class="meeting-card" v-for="meeting in upcomingMeetings" :key="meeting.id">
+        <div class="card text-white bg-primary mb-3" style="max-width: 40rem;">
+          <div class="card-body text-left">
+            <div class="meeting-info">
+              <h3 class="card-title">{{ formatDate(meeting.date) }}, {{ formatTime(meeting.time) }}</h3>
+              <h3 class="card-text"> Meeting with {{ getAdvisorFirstName(userStore.user.advisor) }}</h3>
+            </div>
+            <a href="https://teams.microsoft.com/" target="_blank">
+              <img class="teams-logo" src="../../assets/teams-logo.png" alt="teams logo">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scrollable-column">
+      <h2><strong>Past Meetings</strong></h2>
+      <hr>
+      <div v-if="pastMeetings.length === 0">No past meetings</div>
+      <div class="meeting-card" v-for="meeting in pastMeetings" :key="meeting.id">
+        <div class="card text-white bg-secondary mb-3" style="max-width: 40rem;">
+          <div class="card-body text-left">
+            <div class="meeting-info">
+              <h3 class="card-title">{{ formatDate(meeting.date) }} at {{ formatTime(meeting.time) }}</h3>
+              <h3 class="card-text"> Meeting with {{ getAdvisorFirstName(userStore.user.advisor) }}</h3>
+            </div>
+            <a href="https://teams.microsoft.com/" target="_blank">
+              <img class="teams-logo" src="../../assets/teams-logo.png" alt="teams logo">
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -13,8 +41,8 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue';
-import {useUserStore} from "../../../auth"
+import { ref, onMounted, watch } from 'vue';
+import { useUserStore } from "../../../auth";
 
 const meetings = ref([]);
 const userStore = useUserStore();
@@ -37,6 +65,22 @@ onMounted(async () => {
   }
 });
 
+const today = new Date();
+const upcomingMeetings = ref([]);
+const pastMeetings = ref([]);
+
+watch(meetings, (newMeetings) => {
+  upcomingMeetings.value = newMeetings.filter(meeting => {
+    const meetingDate = new Date(meeting.date);
+    return meetingDate >= today;
+  });
+
+  pastMeetings.value = newMeetings.filter(meeting => {
+    const meetingDate = new Date(meeting.date);
+    return meetingDate < today;
+  });
+});
+
 const formatTime = (time) => {
   const parsedTime = new Date(`1970-01-01T${time}`);
   return parsedTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
@@ -47,10 +91,53 @@ const formatDate = (date) => {
   const options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
   return parsedDate.toLocaleDateString('en-UK', options);
 };
+
+const getAdvisorFirstName = (advisorUsername) => {
+  const firstName = advisorUsername.split(/(?=[A-Z][a-z])/)[0];
+  return firstName;
+};
 </script>
 
 <style scoped>
+.scrollable-column {
+  display: inline-block;
+  vertical-align: top;
+  overflow-y: auto;
+  max-height: 400px;
+  background-color: #A9B7C3;
+  padding: 10px;
+  border-radius: 3em;
+  margin-right: 20px;
+  width: 35em;
+  text-align: center;
+}
+
+.meeting-card {
+  display: inline-block;
+  margin: 10px;
+  width: 30em;
+}
+
 .card {
-  width: 300px;
+  max-width: 40rem;
+  border-radius: 1em;
+  text-align: left;
+}
+
+.teams-logo {
+  position: absolute;
+  top: 3.2em;
+  right: 1em;
+  width: 3em;
+  transition: filter 0.3s ease;
+}
+
+.meeting-info {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.teams-logo:hover {
+  filter: brightness(0.8);
 }
 </style>

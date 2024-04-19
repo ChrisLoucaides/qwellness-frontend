@@ -2,7 +2,7 @@
   <main v-motion-fade>
     <div v-if="userStore.user" v-motion-slide-bottom>
       <h1> 📅 <span>{{ userStore.user.first_name }}'s</span> Calendar</h1>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createMeeting">
+      <button type="button" class="btn btn-success schedule-meeting" data-bs-toggle="modal" data-bs-target="#createMeeting">
         Schedule Meeting
         <span class="material-icons add-circle">add_circle</span>
       </button>
@@ -85,6 +85,7 @@ const scheduleMeeting = async () => {
   } catch (error) {
     console.error('An error occurred:', error)
   }
+  window.location.replace("http://localhost:5173/calendar")
 }
 
 const getCookie = (name) => {
@@ -114,6 +115,10 @@ h1 {
   position: relative;
   top: 0.25em;
   color: white;
+}
+
+.schedule-meeting {
+  border-radius: 1.5em;
 }
 
 main {
