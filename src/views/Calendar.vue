@@ -24,11 +24,11 @@
             <form @submit.prevent="scheduleMeeting">
               <div class="mb-3">
                 <label for="dueDate" class="form-label">Meeting Date</label>
-                <input type="date" class="form-control" id="dueDate" v-model="meeting.meeting_date"> <!--TODO: Restrict so that dates can only be picked from the future onwards-->
+                <input type="date" class="form-control" id="dueDate" v-model="meeting.meeting_date" required> <!--TODO: Restrict so that dates can only be picked from the future onwards-->
               </div>
               <div class="mb-3">
                 <label for="dueDate" class="form-label">Time</label>
-                <input type="time" class="form-control" id="dueDate" v-model="meeting.meeting_time">
+                <input type="time" class="form-control" id="dueDate" v-model="meeting.meeting_time" required>
               </div>
               <button type="submit" class="btn btn-primary">Schedule Meeting</button>
             </form>
