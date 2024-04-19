@@ -8,6 +8,7 @@
       </button>
     </div>
     <div class="restrict-task-container">
+      <StudentMeetings />
     </div>
   </main>
 
@@ -23,7 +24,7 @@
             <form @submit.prevent="scheduleMeeting">
               <div class="mb-3">
                 <label for="dueDate" class="form-label">Meeting Date</label>
-                <input type="date" class="form-control" id="dueDate" v-model="meeting.meeting_date">
+                <input type="date" class="form-control" id="dueDate" v-model="meeting.meeting_date"> <!--TODO: Restrict so that dates can only be picked from the future onwards-->
               </div>
               <div class="mb-3">
                 <label for="dueDate" class="form-label">Time</label>
@@ -45,6 +46,7 @@
 import {ref, onMounted} from 'vue'
 import {useUserStore} from "../../auth.ts";
 import Task from "../components/student-components/Task.vue";
+import StudentMeetings from "../components/student-components/StudentMeetings.vue";
 
 const userStore = useUserStore()
 
