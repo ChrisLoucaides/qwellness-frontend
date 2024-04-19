@@ -5,7 +5,7 @@
       <h2><strong>Upcoming Meetings</strong></h2>
       <hr>
       <div v-if="upcomingMeetings.length === 0">No upcoming meetings</div>
-      <div class="meeting-card" v-for="meeting in upcomingMeetings" :key="meeting.id" v-motion-slide-visible-bottom>
+      <div class="meeting-card" v-if="isVisible" v-for="meeting in upcomingMeetings" :key="meeting.id" v-motion-slide-visible-bottom>
         <div class="card text-white bg-primary mb-3" style="max-width: 40rem;">
           <div class="card-body text-left">
             <div class="meeting-info">
@@ -80,6 +80,7 @@ const deleteMeeting = async (meetingId) => {
     });
 
     if (response.ok) {
+      isVisible.value = false;
     } else {
       console.error('Failed to delete meeting:', response.statusText);
     }
@@ -93,6 +94,7 @@ const deleteMeeting = async (meetingId) => {
 const today = new Date();
 const upcomingMeetings = ref([]);
 const pastMeetings = ref([]);
+const isVisible = ref(true);
 
 watch(meetings, (newMeetings) => {
   upcomingMeetings.value = newMeetings.filter(meeting => {
