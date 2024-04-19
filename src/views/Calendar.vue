@@ -45,7 +45,6 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import {useUserStore} from "../../auth.ts";
-import Task from "../components/student-components/Task.vue";
 import StudentMeetings from "../components/student-components/StudentMeetings.vue";
 
 const userStore = useUserStore()

@@ -1,17 +1,43 @@
 <template>
   <div class="meeting-pill" v-motion-slide-visible-bottom>
-    <div v-if="userStore.user" class="meeting-pill-text">
-      Your next meeting with <span> {{ userStore.user.advisor }} </span> is on
+    <div v-if="nextMeeting" class="meeting-pill-text">
+      Your next meeting with <span> {{ getAdvisorFirstName(userStore.user.advisor) }} </span> is on
       <br>
-      <span>05/03/2023 at 3PM</span>
+      <span>{{ formatDate(nextMeeting.date) }} at {{ formatTime(nextMeeting.time) }}</span>
+    </div>
+    <div v-else>
+      No upcoming meetings
     </div>
   </div>
 </template>
 
 <script setup>
-import { useUserStore } from "../../../auth.ts";
+import { ref, onMounted } from 'vue';
+import { useUserStore } from "../../../auth";
 
 const userStore = useUserStore();
+const nextMeeting = ref(null);
+
+onMounted(async () => {
+  const response = await fetch(`http://localhost:8000/student-meetings/?id=${userStore.user.id}`, {
+    method: 'GET',
+    credentials: 'include'
+  });
+  if (response.ok) {
+    const data = await response.json();
+    const meetings = data.meetings;
+    const today = new Date();
+    const upcomingMeetings = meetings.filter(meeting => new Date(meeting.date) >= today);
+    upcomingMeetings.sort((a, b) => new Date(a.date) - new Date(b.date));
+    nextMeeting.value = upcomingMeetings[0] || null;
+  } else {
+    console.error('Failed to fetch meetings:', response.statusText);
+  }
+});
+
+const formatTime = (time) => new Date(`1970-01-01T${time}`).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+const formatDate = (date) => new Date(date).toLocaleDateString('en-UK', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+const getAdvisorFirstName = (advisorUsername) => advisorUsername.split(/(?=[A-Z][a-z])/)[0];
 </script>
 
 <style scoped>
