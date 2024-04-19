@@ -1,11 +1,11 @@
 <template>
   <div>
     <br>
-    <div class="scrollable-column">
+    <div class="scrollable-column" v-motion-slide-right>
       <h2><strong>Upcoming Meetings</strong></h2>
       <hr>
       <div v-if="upcomingMeetings.length === 0">No upcoming meetings</div>
-      <div class="meeting-card" v-for="meeting in upcomingMeetings" :key="meeting.id">
+      <div class="meeting-card" v-for="meeting in upcomingMeetings" :key="meeting.id" v-motion-slide-visible-bottom>
         <div class="card text-white bg-primary mb-3" style="max-width: 40rem;">
           <div class="card-body text-left">
             <div class="meeting-info">
@@ -19,11 +19,11 @@
         </div>
       </div>
     </div>
-    <div class="scrollable-column">
+    <div class="scrollable-column" v-motion-slide-left>
       <h2><strong>Past Meetings</strong></h2>
       <hr>
       <div v-if="pastMeetings.length === 0">No past meetings</div>
-      <div class="meeting-card" v-for="meeting in pastMeetings" :key="meeting.id">
+      <div class="meeting-card" v-for="meeting in pastMeetings" :key="meeting.id" v-motion-slide-visible-bottom>
         <div class="card text-white bg-secondary mb-3" style="max-width: 40rem;">
           <div class="card-body text-left">
             <div class="meeting-info">
