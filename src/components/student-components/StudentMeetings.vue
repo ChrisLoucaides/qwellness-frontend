@@ -16,6 +16,7 @@
               <img class="teams-logo" src="../../assets/teams-logo.png" alt="teams logo">
             </a>
           </div>
+          <button @click="deleteMeeting(meeting.id)" class="btn btn-danger">Delete</button>
         </div>
       </div>
     </div>
@@ -65,6 +66,30 @@ onMounted(async () => {
   }
 });
 
+const deleteMeeting = async (meetingId) => {
+  try {
+    const csrfToken = getCookie('csrftoken');
+    const response = await fetch(`http://localhost:8000/remove-meeting/`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      },
+      credentials: "include",
+      body: JSON.stringify({ id: meetingId })
+    });
+
+    if (response.ok) {
+    } else {
+      console.error('Failed to delete meeting:', response.statusText);
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+  }
+};
+
+
+
 const today = new Date();
 const upcomingMeetings = ref([]);
 const pastMeetings = ref([]);
@@ -96,6 +121,13 @@ const getAdvisorFirstName = (advisorUsername) => {
   const firstName = advisorUsername.split(/(?=[A-Z][a-z])/)[0];
   return firstName;
 };
+
+const getCookie = (name) => {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 </script>
 
 <style scoped>
