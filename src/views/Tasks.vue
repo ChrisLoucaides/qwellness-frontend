@@ -49,15 +49,15 @@
             <form @submit.prevent="createTask">
               <div class="mb-3">
                 <label for="taskName" class="form-label">Task Name</label>
-                <input type="text" class="form-control" id="taskName" v-model="task.name">
+                <input type="text" class="form-control" id="taskName" v-model="task.name" required>
               </div>
               <div class="mb-3">
                 <label for="dueDate" class="form-label">Due Date</label>
-                <input type="date" class="form-control" id="dueDate" v-model="task.due_date">
+                <input type="date" class="form-control" id="dueDate" v-model="task.due_date" required>
               </div>
               <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" id="description" rows="3" v-model="task.description"></textarea>
+                <textarea class="form-control" id="description" rows="3" v-model="task.description" required></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Save Task</button>
             </form>
