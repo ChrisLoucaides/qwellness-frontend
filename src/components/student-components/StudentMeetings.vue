@@ -15,8 +15,8 @@
             <a href="https://teams.microsoft.com/" target="_blank">
               <img class="teams-logo" src="../../assets/teams-logo.png" alt="teams logo">
             </a>
-            <button @click="deleteMeeting(meeting.id)" class="btn btn-danger">Delete</button>
           </div>
+          <button @click="deleteMeeting(meeting.id)" class="btn btn-danger delete-button">Remove Meeting</button>
         </div>
       </div>
     </div>
@@ -34,8 +34,8 @@
             <a href="https://teams.microsoft.com/" target="_blank">
               <img class="teams-logo" src="../../assets/teams-logo.png" alt="teams logo">
             </a>
-            <button @click="deleteMeeting(meeting.id)" class="btn btn-danger">Delete</button>
           </div>
+          <button @click="deleteMeeting(meeting.id)" class="btn btn-danger delete-button">Remove Meeting</button>
         </div>
       </div>
     </div>
@@ -123,10 +123,11 @@ const getCookie = (name) => document.cookie.split(`; ${name}=`).pop().split(';')
 
 .teams-logo {
   position: absolute;
-  top: 3.2em;
+  top: 4em;
   right: 1em;
-  width: 3em;
+  width: 5em;
   transition: filter 0.3s ease;
+  transition: transform ease 300ms;
 }
 
 .meeting-info {
@@ -136,5 +137,15 @@ const getCookie = (name) => document.cookie.split(`; ${name}=`).pop().split(';')
 
 .teams-logo:hover {
   filter: brightness(0.8);
+  transform: translate(0, -10px);
+  transition: transform ease 300ms;
+
+}
+
+.delete-button {
+  width: 10rem;
+  margin-left: 1em;
+  margin-bottom: 0.5em;
+  border-radius: 2em;
 }
 </style>
