@@ -3,7 +3,7 @@
     <div v-if="nextMeeting" class="meeting-pill-text">
       Your next meeting with <span> {{ getAdvisorFirstName(userStore.user.advisor) }} </span> is on
       <br>
-      <span>{{ formatDate(nextMeeting.date) }} at {{ formatTime(nextMeeting.time) }}</span>
+      <span>{{ formatDate(nextMeeting.date) }} </span> at <span>{{ formatTime(nextMeeting.time) }}</span>
     </div>
     <div v-else>
       No upcoming meetings
