@@ -31,11 +31,26 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="createMeetingLabel">Meeting with {{ userStore.user.advisor }}</h5>
+            <h5 v-if="userStore.user.role === 'STUDENT'" class="modal-title" id="createMeetingLabel">Meeting with {{ userStore.user.advisor }}</h5>
+            <h5 v-if="userStore.user.role === 'ADVISOR'" class="modal-title" id="createMeetingLabel">Schedule a meeting</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
-            <form @submit.prevent="scheduleMeeting">
+          <div v-if="userStore.user.role === 'STUDENT'" class="modal-body">
+            <form @submit.prevent="scheduleMeetingAsStudent">
+              <div class="mb-3">
+                <label for="dueDate" class="form-label">Meeting Date</label>
+                <input type="date" class="form-control" id="dueDate" v-model="meeting.meeting_date" required> <!--TODO: Restrict so that dates can only be picked from the future onwards-->
+              </div>
+              <!--TODO FYP-34: -->
+              <div class="mb-3">
+                <label for="dueDate" class="form-label">Time</label>
+                <input type="time" class="form-control" id="dueDate" v-model="meeting.meeting_time" required>
+              </div>
+              <button type="submit" class="btn btn-primary">Schedule Meeting</button>
+            </form>
+          </div>
+          <div v-if="userStore.user.role === 'ADVISOR'" class="modal-body">
+            <form @submit.prevent="scheduleMeetingAsAdvisor">
               <div class="mb-3">
                 <label for="dueDate" class="form-label">Meeting Date</label>
                 <input type="date" class="form-control" id="dueDate" v-model="meeting.meeting_date" required> <!--TODO: Restrict so that dates can only be picked from the future onwards-->
