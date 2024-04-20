@@ -1,5 +1,5 @@
 <template>
-  <main v-motion-fade>
+  <main v-if="userStore.user.role === 'STUDENT'" v-motion-fade>
     <div v-if="userStore.user" v-motion-slide-bottom>
       <h1> 📅 <span>{{ userStore.user.first_name }}'s</span> Calendar</h1>
       <button type="button" class="btn btn-success schedule-meeting" data-bs-toggle="modal" data-bs-target="#createMeeting">
@@ -7,11 +7,24 @@
         <span class="material-icons add-circle">add_circle</span>
       </button>
     </div>
-<!--TODO FYP-32: Display different content if an advisor is logged in-->
     <div class="restrict-task-container">
       <StudentMeetings />
     </div>
   </main>
+
+  <main v-if="userStore.user.role === 'ADVISOR'" v-motion-fade>
+    <div v-if="userStore.user" v-motion-slide-bottom>
+      <h1> 📅 <span>{{ userStore.user.first_name }}'s</span> Calendar</h1>
+      <button type="button" class="btn btn-success schedule-meeting" data-bs-toggle="modal" data-bs-target="#createMeeting">
+        Schedule Meeting
+        <span class="material-icons add-circle">add_circle</span>
+      </button>
+    </div>
+    <div class="restrict-task-container">
+      <AdvisorMeetings />
+    </div>
+  </main>
+
 
   <div>
     <div class="modal fade" id="createMeeting" tabindex="-1" aria-labelledby="createMeetingLabel" aria-hidden="true">
@@ -47,6 +60,7 @@
 import {ref, onMounted} from 'vue'
 import {useUserStore} from "../../auth.ts";
 import StudentMeetings from "../components/student-components/StudentMeetings.vue";
+import AdvisorMeetings from "../components/advisor-components/AdvisorMeetings.vue";
 
 const userStore = useUserStore()
 

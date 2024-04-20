@@ -2,15 +2,15 @@
   <div>
     <br>
     <div class="scrollable-column" v-motion-slide-right>
-      <h2><strong>Upcoming Meetings</strong></h2>
+      <h2><Strong>Upcoming Meetings</Strong></h2>
       <hr>
       <div v-if="upcomingMeetings.length === 0">No upcoming meetings</div>
-      <div class="meeting-card" v-for="meeting in upcomingMeetings" :key="meeting.id" v-motion-slide-visible-bottom>
+      <div class="meeting-card" v-for="meeting in upcomingMeetings" :key="meeting.id">
         <div class="card text-white bg-primary mb-3" style="max-width: 40rem;">
           <div class="card-body text-left">
             <div class="meeting-info">
               <h3 class="card-title">{{ formatDate(meeting.date) }}, {{ formatTime(meeting.time) }}</h3>
-              <h3 class="card-text"> Meeting with {{ getAdvisorFirstName(userStore.user.advisor) }}</h3>
+              <h3 class="card-title">Meeting with {{ meeting.student }}</h3>
             </div>
             <a href="https://teams.microsoft.com/" target="_blank">
               <img class="teams-logo" src="../../assets/teams-logo.png" alt="teams logo">
@@ -28,8 +28,8 @@
         <div class="card text-white bg-secondary mb-3" style="max-width: 40rem;">
           <div class="card-body text-left">
             <div class="meeting-info">
-              <h3 class="card-title">{{ formatDate(meeting.date) }} at {{ formatTime(meeting.time) }}</h3>
-              <h3 class="card-text"> Meeting with {{ getAdvisorFirstName(userStore.user.advisor) }}</h3>
+              <h3 class="card-title">{{ formatDate(meeting.date) }}, {{ formatTime(meeting.time) }}</h3>
+              <h3 class="card-title">Meeting with {{ meeting.student }}</h3>
             </div>
             <a href="https://teams.microsoft.com/" target="_blank">
               <img class="teams-logo" src="../../assets/teams-logo.png" alt="teams logo">
@@ -43,20 +43,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-import { useUserStore } from "../../../auth";
+import {ref, onMounted, watch} from 'vue';
+import {useUserStore} from "../../../auth";
 
 const meetings = ref([]);
 const userStore = useUserStore();
 
 onMounted(async () => {
-  const response = await fetch(`http://localhost:8000/student-meetings/?id=${userStore.user.id}`, {
+  const response = await fetch(`http://localhost:8000/advisor-meetings/?id=${userStore.user.id}`, {
     method: 'GET',
     credentials: 'include'
   });
   if (response.ok) {
     const data = await response.json();
     meetings.value = data.meetings;
+    console.log(meetings.value)
   } else {
     console.error('Failed to fetch meetings:', response.statusText);
   }
@@ -71,7 +72,7 @@ const deleteMeeting = async (meetingId) => {
       'X-CSRFToken': csrfToken
     },
     credentials: "include",
-    body: JSON.stringify({ id: meetingId })
+    body: JSON.stringify({id: meetingId})
   });
   if (response.ok) {
     meetings.value = meetings.value.filter(m => m.id !== meetingId);
@@ -79,6 +80,7 @@ const deleteMeeting = async (meetingId) => {
     console.error('Failed to delete meeting:', response.statusText);
   }
 };
+
 
 const today = new Date();
 const upcomingMeetings = ref([]);
@@ -89,8 +91,17 @@ watch(meetings, (newMeetings) => {
   pastMeetings.value = newMeetings.filter(meeting => new Date(meeting.date) < today);
 });
 
-const formatTime = (time) => new Date(`1970-01-01T${time}`).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-const formatDate = (date) => new Date(date).toLocaleDateString('en-UK', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+
+const formatTime = (time) => new Date(`1970-01-01T${time}`).toLocaleTimeString([], {
+  hour: '2-digit',
+  minute: '2-digit'
+});
+const formatDate = (date) => new Date(date).toLocaleDateString('en-UK', {
+  weekday: 'long',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit'
+});
 const getAdvisorFirstName = (advisorUsername) => advisorUsername.split(/(?=[A-Z][a-z])/)[0];
 const getCookie = (name) => document.cookie.split(`; ${name}=`).pop().split(';').shift();
 </script>
