@@ -2,7 +2,7 @@
   <div class="list-of-students">
     <div>
       <div class="student-list-header" v-motion-slide-visible-top>
-        <h1>Your Students 🧑‍🎓</h1>
+        <h1><strong>Your Students 🧑‍🎓</strong></h1>
         <hr>
       </div>
       <StudentListComponent></StudentListComponent>
