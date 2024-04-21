@@ -42,13 +42,12 @@
           <div v-if="userStore.user.role === 'STUDENT'" class="modal-body">
             <form @submit.prevent="scheduleMeetingAsStudent">
               <div class="mb-3">
-                <label for="dueDate" class="form-label">Meeting Date</label>
-                <input type="date" class="form-control" id="dueDate" v-model="meeting.meeting_date" required>
-                <!--TODO: Restrict so that dates can only be picked from the future onwards-->
+                <label for="meetingDate" class="form-label">Meeting Date</label>
+                <input type="date" class="form-control" id="meetingDate" v-model="meeting.meeting_date" :min="minDate" required>
               </div>
               <div class="mb-3">
-                <label for="dueDate" class="form-label">Time</label>
-                <input type="time" class="form-control" id="dueDate" v-model="meeting.meeting_time" required>
+                <label for="meetingTime" class="form-label">Time</label>
+                <input type="time" class="form-control" id="meetingTime" v-model="meeting.meeting_time" required>
               </div>
               <button type="submit" class="btn btn-primary">Schedule Meeting</button>
             </form>
@@ -57,13 +56,12 @@
           <div v-if="userStore.user.role === 'ADVISOR'" class="modal-body">
             <form @submit.prevent="scheduleMeetingAsAdvisor">
               <div class="mb-3">
-                <label for="dueDate" class="form-label">Meeting Date</label>
-                <input type="date" class="form-control" id="dueDate" v-model="meeting.meeting_date" required>
-                <!--TODO: Restrict so that dates can only be picked from the future onwards-->
+                <label for="meetingDate" class="form-label">Meeting Date</label>
+                <input type="date" class="form-control" id="meetingDate" v-model="meeting.meeting_date" :min="minDate" required>
               </div>
               <div class="mb-3">
-                <label for="dueDate" class="form-label">Time</label>
-                <input type="time" class="form-control" id="dueDate" v-model="meeting.meeting_time" required>
+                <label for="meetingTime" class="form-label">Time</label>
+                <input type="time" class="form-control" id="meetingTime" v-model="meeting.meeting_time" required>
               </div>
               <div class="mb-3">
                 <label for="studentSelect" class="form-label">Select Student</label>
@@ -85,7 +83,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, computed} from 'vue'
 import {useUserStore} from "../../auth.ts";
 import StudentMeetings from "../components/student-components/StudentMeetings.vue";
 import AdvisorMeetings from "../components/advisor-components/AdvisorMeetings.vue";
@@ -195,6 +193,12 @@ const getCookie = (name) => {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
 }
+
+const minDate = computed(() => {
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + 1);
+  return currentDate.toISOString().split('T')[0];
+});
 
 onMounted(fetchStudents);
 </script>
