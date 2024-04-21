@@ -5,7 +5,7 @@
       <h2><strong>Upcoming Meetings</strong></h2>
       <hr>
       <div v-if="upcomingMeetings.length === 0">No upcoming meetings</div>
-      <div class="meeting-card" v-for="meeting in upcomingMeetings" :key="meeting.id" v-motion-slide-visible-bottom>
+      <div class="meeting-card" v-for="meeting in sortedUpcomingMeetings" :key="meeting.id" v-motion-slide-visible-bottom>
         <div class="card text-white bg-primary mb-3" style="max-width: 40rem;">
           <div class="card-body text-left">
             <div class="meeting-info">
@@ -24,7 +24,7 @@
       <h2><strong>Past Meetings</strong></h2>
       <hr>
       <div v-if="pastMeetings.length === 0">No past meetings</div>
-      <div class="meeting-card" v-for="meeting in pastMeetings" :key="meeting.id" v-motion-slide-visible-bottom>
+      <div class="meeting-card" v-for="meeting in sortedPastMeetings" :key="meeting.id" v-motion-slide-visible-bottom>
         <div class="card text-white bg-secondary mb-3" style="max-width: 40rem;">
           <div class="card-body text-left">
             <div class="meeting-info">
@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { useUserStore } from "../../../auth";
 
 const meetings = ref([]);
@@ -87,6 +87,22 @@ const pastMeetings = ref([]);
 watch(meetings, (newMeetings) => {
   upcomingMeetings.value = newMeetings.filter(meeting => new Date(meeting.date) >= today);
   pastMeetings.value = newMeetings.filter(meeting => new Date(meeting.date) < today);
+});
+
+const sortedUpcomingMeetings = computed(() => {
+  return upcomingMeetings.value.slice().sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateA - dateB;
+  });
+});
+
+const sortedPastMeetings = computed(() => {
+  return pastMeetings.value.slice().sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA;
+  });
 });
 
 const formatTime = (time) => new Date(`1970-01-01T${time}`).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
