@@ -12,7 +12,7 @@ onMounted(async () => {
 
 <template>
   <div v-if="userStore.user" v-motion-slide-top>
-    <h1>👋 Hi <span>{{ userStore.user.first_name }}!</span></h1>
+    <h1>👋 <strong>Hi <span>{{ userStore.user.first_name }}!</span></strong></h1>
   </div>
 </template>
 
