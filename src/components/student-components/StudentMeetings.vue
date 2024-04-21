@@ -45,6 +45,7 @@
 <script setup>
 import { ref, onMounted, watch, computed } from 'vue';
 import { useUserStore } from "../../../auth";
+import { formatTime, formatDate, getAdvisorFirstName, getCookie } from '../../utils/utils'
 
 const meetings = ref([]);
 const userStore = useUserStore();
@@ -104,11 +105,6 @@ const sortedPastMeetings = computed(() => {
     return dateB - dateA;
   });
 });
-
-const formatTime = (time) => new Date(`1970-01-01T${time}`).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-const formatDate = (date) => new Date(date).toLocaleDateString('en-UK', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
-const getAdvisorFirstName = (advisorUsername) => advisorUsername.split(/(?=[A-Z][a-z])/)[0];
-const getCookie = (name) => document.cookie.split(`; ${name}=`).pop().split(';').shift();
 </script>
 
 <style scoped>

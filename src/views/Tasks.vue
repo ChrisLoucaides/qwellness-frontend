@@ -163,7 +163,7 @@ const createTask = async () => {
   }
 }
 
-const getCookie = (name) => {
+const getCookie = (name) => { //TODO FYP-37
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(';').shift();
