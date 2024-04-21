@@ -74,6 +74,7 @@
 <script setup>
 import {ref, onMounted} from 'vue'
 import {useUserStore} from "../../auth.ts";
+import {getCookie} from "../utils/utils.js";
 import Task from "../components/student-components/Task.vue";
 
 const userStore = useUserStore()
@@ -161,12 +162,6 @@ const createTask = async () => {
   } catch (error) {
     console.error('Error creating task:', error)
   }
-}
-
-const getCookie = (name) => { //TODO FYP-37
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
 }
 </script>
 
