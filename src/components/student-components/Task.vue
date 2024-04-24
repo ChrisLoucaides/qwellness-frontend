@@ -1,6 +1,6 @@
 <template>
   <div class="task" v-if="isVisible">
-    <div class="card text-white bg-primary mb-3" style="max-width: 50rem;">
+    <div :class="cardClass" style="max-width: 50rem;">
       <div class="card-header"><h3>{{ task.name }}</h3></div>
       <div class="card-body">
         <h5 class="card-title"><p>Due: {{ task.due_date }}</p></h5>
@@ -30,24 +30,21 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <label for="'taskName_' + task.id" class="form-label">Task Name</label>
+            <label :for="'taskName_' + task.id" class="form-label">Task Name</label>
             <input type="text" class="form-control" :id="'taskName_' + task.id" v-model="editedTask.name">
           </div>
           <div class="mb-3">
-            <label for="'dueDate_' + task.id" class="form-label">Due Date</label>
+            <label :for="'dueDate_' + task.id" class="form-label">Due Date</label>
             <input type="date" class="form-control" :id="'dueDate_' + task.id" v-model="editedTask.due_date" :min="minDate">
           </div>
           <div class="mb-3">
-            <label for="'description_' + task.id" class="form-label">Description</label>
-            <textarea class="form-control" :id="'description_' + task.id" rows="3"
-                      v-model="editedTask.description"></textarea>
+            <label :for="'description_' + task.id" class="form-label">Description</label>
+            <textarea class="form-control" :id="'description_' + task.id" rows="3" v-model="editedTask.description"></textarea>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" :disabled="!buttonEnabled" @click="saveTaskChanges">Save
-            Changes
-          </button>
+          <button type="button" class="btn btn-primary" :disabled="!buttonEnabled" @click="saveTaskChanges">Save Changes</button>
         </div>
       </div>
     </div>
@@ -55,21 +52,26 @@
 </template>
 
 <script setup>
-import {defineProps, onMounted, ref, toRefs, defineEmits, computed} from 'vue';
-import {getCookie} from "../../utils/utils.js";
+import { defineProps, onMounted, ref, toRefs, computed } from 'vue';
+import { getCookie } from "../../utils/utils.js";
 
 const props = defineProps({
   task: Object
-})
+});
 
-const {task} = toRefs(props);
+const { task } = toRefs(props);
 const editedTask = ref({...task.value});
 const buttonEnabled = ref(false);
 const isVisible = ref(true);
-const emit = defineEmits(['edit-task'])
+const emit = defineEmits(['edit-task']);
 
-const openEditModal = () => {
-};
+const cardClass = computed(() => {
+  const today = new Date();
+  const dueDate = new Date(task.value.due_date);
+  return dueDate < today ? 'card text-white bg-danger mb-3' : 'card text-white bg-primary mb-3';
+});
+
+const openEditModal = () => {};
 
 const deleteTaskAndHide = async () => {
   await deleteTask();
@@ -113,7 +115,6 @@ onMounted(() => {
   setTimeout(() => {
     buttonEnabled.value = true;
   }, 3000);
-  document.body.appendChild(document.getElementById('editTaskModal_' + task.value.id));
 });
 </script>
 
