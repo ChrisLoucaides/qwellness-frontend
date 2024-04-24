@@ -190,7 +190,7 @@ const scheduleMeetingAsAdvisor = async () => {
 }
 
 
-const minDate = computed(() => {
+const minDate = computed(() => { //TODO FYP-38: Refactor me
   const currentDate = new Date();
   currentDate.setDate(currentDate.getDate() + 1);
   return currentDate.toISOString().split('T')[0];

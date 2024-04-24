@@ -9,7 +9,7 @@
           <p>Loading tasks...</p>
         </div>
         <div v-else>
-          <div v-if="sortedTasks.length">
+          <div v-if="tasks.length">
             <h2 class="to-do-list-heading">To Do List</h2>
             <div class="flex-center">
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTask">
@@ -19,7 +19,7 @@
             </div>
             <hr>
             <div class="task-scroll-container" v-motion-slide-visible-bottom>
-              <Task v-for="task in sortedTasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
+              <Task v-for="task in tasks" :key="task.id" :task="task" @edit-task="updateTask" v-motion-slide-top/>
             </div>
           </div>
           <div v-else>
@@ -72,28 +72,34 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import { useUserStore } from "../../auth.ts"
-import Task from "../components/student-components/Task.vue"
+import {ref, onMounted, computed} from 'vue'
+import { useUserStore } from "../../auth.ts";
+import { getCookie } from "../utils/utils.js";
+import Task from "../components/student-components/Task.vue";
 
 const userStore = useUserStore()
+
 const tasks = ref([])
 const loading = ref(true)
-const task = ref({
-  name: '',
-  due_date: '',
-  description: ''
-})
 
 onMounted(async () => {
   try {
-    const response = await fetch(`http://localhost:8000/student-tasks/?username=${userStore.user.username}`, {
+    const response = await fetch('http://localhost:8000/student-tasks/?username=' + userStore.user.username, {
       method: 'GET',
       credentials: "include"
     })
     if (response.ok) {
       const data = await response.json()
-      tasks.value = data.tasks
+      const fetchedTasks = data.tasks;
+
+      const sortedTasks = fetchedTasks.slice().sort((a, b) => {
+        const dateA = new Date(a.due_date);
+        const dateB = new Date(b.due_date);
+        const today = new Date();
+        return dateA < today ? -1 : dateB < today ? 1 : dateA - dateB;
+      });
+
+      tasks.value = sortedTasks;
     } else {
       console.error('Failed to fetch tasks:', response.statusText)
     }
@@ -104,8 +110,10 @@ onMounted(async () => {
   }
 })
 
-const sortedTasks = computed(() => {
-  return tasks.value.sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
+const task = ref({
+  name: '',
+  due_date: '',
+  description: ''
 })
 
 const updateTask = async (taskId, updatedTaskDetails) => {
@@ -165,7 +173,7 @@ const createTask = async () => {
   }
 }
 
-const minDate = computed(() => {
+const minDate = computed(() => { // TODO FYP=38
   const currentDate = new Date();
   currentDate.setDate(currentDate.getDate() + 1);
   return currentDate.toISOString().split('T')[0];
