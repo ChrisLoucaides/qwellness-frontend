@@ -53,7 +53,7 @@
 
 <script setup>
 import { defineProps, onMounted, ref, toRefs, computed } from 'vue';
-import { getCookie } from "../../utils/utils.js";
+import {getCookie, minDate} from "../../utils/utils.js";
 
 const props = defineProps({
   task: Object
@@ -104,12 +104,6 @@ const deleteTask = async () => {
     console.error('Error deleting task:', error);
   }
 };
-
-const minDate = computed(() => {
-  const currentDate = new Date();
-  currentDate.setDate(currentDate.getDate() + 1);
-  return currentDate.toISOString().split('T')[0];
-});
 
 onMounted(() => {
   setTimeout(() => {

@@ -85,7 +85,7 @@
 <script setup>
 import {ref, onMounted, computed} from 'vue'
 import {useUserStore} from "../../auth.ts";
-import {getCookie} from "../utils/utils.js";
+import {getCookie, minDate} from "../utils/utils.js";
 import StudentMeetings from "../components/student-components/StudentMeetings.vue";
 import AdvisorMeetings from "../components/advisor-components/AdvisorMeetings.vue";
 
@@ -189,12 +189,6 @@ const scheduleMeetingAsAdvisor = async () => {
   window.location.replace("http://localhost:5173/calendar")
 }
 
-
-const minDate = computed(() => { //TODO FYP-38: Refactor me
-  const currentDate = new Date();
-  currentDate.setDate(currentDate.getDate() + 1);
-  return currentDate.toISOString().split('T')[0];
-});
 
 onMounted(fetchStudents);
 </script>

@@ -74,7 +74,7 @@
 <script setup>
 import {ref, onMounted, computed} from 'vue'
 import { useUserStore } from "../../auth.ts";
-import { getCookie } from "../utils/utils.js";
+import {getCookie, minDate} from "../utils/utils.js";
 import Task from "../components/student-components/Task.vue";
 
 const userStore = useUserStore()
@@ -172,12 +172,6 @@ const createTask = async () => {
     console.error('Error creating task:', error)
   }
 }
-
-const minDate = computed(() => { // TODO FYP=38
-  const currentDate = new Date();
-  currentDate.setDate(currentDate.getDate() + 1);
-  return currentDate.toISOString().split('T')[0];
-});
 </script>
 
 <style scoped>
