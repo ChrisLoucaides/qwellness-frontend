@@ -53,7 +53,7 @@
               </div>
               <div class="mb-3">
                 <label for="dueDate" class="form-label">Due Date</label>
-                <input type="date" class="form-control" id="dueDate" v-model="task.due_date" required>
+                <input type="date" class="form-control" id="dueDate" v-model="task.due_date" :min="minDate" required>
               </div>
               <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import {ref, onMounted} from 'vue'
+import {ref, onMounted, computed} from 'vue'
 import {useUserStore} from "../../auth.ts";
 import {getCookie} from "../utils/utils.js";
 import Task from "../components/student-components/Task.vue";
@@ -163,6 +163,12 @@ const createTask = async () => {
     console.error('Error creating task:', error)
   }
 }
+
+const minDate = computed(() => {
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + 1);
+  return currentDate.toISOString().split('T')[0];
+});
 </script>
 
 <style scoped>

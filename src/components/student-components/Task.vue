@@ -35,7 +35,7 @@
           </div>
           <div class="mb-3">
             <label for="'dueDate_' + task.id" class="form-label">Due Date</label>
-            <input type="date" class="form-control" :id="'dueDate_' + task.id" v-model="editedTask.due_date">
+            <input type="date" class="form-control" :id="'dueDate_' + task.id" v-model="editedTask.due_date" :min="minDate">
           </div>
           <div class="mb-3">
             <label for="'description_' + task.id" class="form-label">Description</label>
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import {defineProps, onMounted, ref, toRefs, defineEmits} from 'vue';
+import {defineProps, onMounted, ref, toRefs, defineEmits, computed} from 'vue';
 import {getCookie} from "../../utils/utils.js";
 
 const props = defineProps({
@@ -102,6 +102,12 @@ const deleteTask = async () => {
     console.error('Error deleting task:', error);
   }
 };
+
+const minDate = computed(() => {
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + 1);
+  return currentDate.toISOString().split('T')[0];
+});
 
 onMounted(() => {
   setTimeout(() => {
