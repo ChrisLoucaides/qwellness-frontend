@@ -115,6 +115,7 @@ onMounted(() => {
   setTimeout(() => {
     buttonEnabled.value = true;
   }, 3000);
+  document.body.appendChild(document.getElementById('editTaskModal_' + task.value.id));
 });
 </script>
 
